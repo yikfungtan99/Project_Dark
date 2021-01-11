@@ -11,7 +11,7 @@ public enum FacingDirection
 public class PlatformerPlayerSprite : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private FacingDirection currentFacingDirection;
+    public FacingDirection currentFacingDirection;
 
     private Vector3 lastCoordinate;
 
