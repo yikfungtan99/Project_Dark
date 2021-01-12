@@ -28,13 +28,13 @@ public class CustomTorch : MonoBehaviour
     {
         Torch();
         RotateTorch();
-        TorchRange();
     }
 
     private void Torch()
     {
         if (Input.GetKey(KeyCode.F))
         {
+            TorchRange();
             selfLight.SetActive(true);
             torch.enabled = true;
         }
