@@ -24,6 +24,11 @@ public class PlatformerMovement : MonoBehaviour
     [SerializeField] private float climbSpeed = 1.0f;
     private float initGravity;
 
+    //OneWayPlatform Field
+    public bool onPlatform;
+    public bool jumpingThroughPlatform = false;
+    public float jumpThroughDelay;
+
     //Misc
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
@@ -32,6 +37,7 @@ public class PlatformerMovement : MonoBehaviour
     [SerializeField] private Collider2D platformCollider;
     [SerializeField] private Collider2D hitCollider;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -45,13 +51,27 @@ public class PlatformerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GroundCheck();
+
         //Movement Input
         MovementInput();
         JumpInput();
         LadderInput();
+        OneWayPlatformInput();
 
         Movement();
-        GroundCheck();
+    }
+
+    private void OneWayPlatformInput()
+    {
+        if (onPlatform)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                StartCoroutine(ResetPlatformCheck());
+                platformCollider.enabled = false;
+            }
+        }
     }
 
     private void MovementInput()
@@ -83,7 +103,7 @@ public class PlatformerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, climbSpeed);
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S) && ladderBelow)
             {
                 rb.velocity = new Vector2(rb.velocity.x, -climbSpeed);
             }
@@ -98,12 +118,11 @@ public class PlatformerMovement : MonoBehaviour
         else
         {
             rb.gravityScale = initGravity;
-            platformCollider.enabled = true;
         }
 
         if (ladderBelow)
         {
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(KeyCode.S) && !onLadder)
             {
                 platformCollider.enabled = false;
                 rb.velocity = new Vector2(rb.velocity.x, -climbSpeed);
@@ -123,6 +142,23 @@ public class PlatformerMovement : MonoBehaviour
         Collider2D collider = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         isGrounded = collider ? true : false;
+
+        if (collider)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform"))
+            {
+                onPlatform = true;
+            }
+            else
+            {
+                onPlatform = false;
+            }
+        }
+
+        if (!jumpingThroughPlatform)
+        {
+            platformCollider.enabled = isGrounded;
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -131,5 +167,13 @@ public class PlatformerMovement : MonoBehaviour
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+    }
+
+    IEnumerator ResetPlatformCheck()
+    {
+        jumpingThroughPlatform = true;
+        yield return new WaitForSeconds(jumpThroughDelay);
+        jumpingThroughPlatform = false;
+
     }
 }

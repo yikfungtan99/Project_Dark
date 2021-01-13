@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlatformerLadderClimber : MonoBehaviour
 {
     [SerializeField] private LayerMask ladderLayer;
-    [SerializeField] private float upperLadderRadius;
+    [SerializeField] private Vector2 upperLadderSize;
     [SerializeField] private Vector3 upperLadderOffset;
     [SerializeField] private float offLadderDelay;
 
-    [SerializeField] private float lowerLadderRadius;
     [SerializeField] private Vector3 lowerLadderOffset;
+    [SerializeField] private float lowerLadderRadius;
 
     private PlatformerMovement pm;
 
@@ -22,9 +22,10 @@ public class PlatformerLadderClimber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Collider2D ladder = Physics2D.OverlapCircle(transform.position + upperLadderOffset, upperLadderRadius, ladderLayer);
-        Collider2D lowerLadder = Physics2D.OverlapCircle(transform.position + lowerLadderOffset, lowerLadderRadius, ladderLayer);
+        Collider2D ladder = Physics2D.OverlapBox(transform.position + upperLadderOffset, upperLadderSize, 0,ladderLayer);
 
+        RaycastHit2D lowerLadder = Physics2D.Raycast(transform.position + lowerLadderOffset, -transform.up, lowerLadderRadius, ladderLayer);
+     
         if (ladder)
         {
             pm.onLadder = true;
@@ -34,7 +35,7 @@ public class PlatformerLadderClimber : MonoBehaviour
             StartCoroutine(OffLadder());
         }
 
-        if (lowerLadder && !ladder)
+        if (lowerLadder)
         {
             pm.ladderBelow = true;
         }
@@ -53,9 +54,9 @@ public class PlatformerLadderClimber : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position + upperLadderOffset, upperLadderRadius);
+        Gizmos.DrawWireCube(transform.position + upperLadderOffset, upperLadderSize);
 
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position + lowerLadderOffset, lowerLadderRadius);
+        Gizmos.DrawLine(transform.position + lowerLadderOffset, transform.position + lowerLadderOffset + (-transform.up * lowerLadderRadius));
     }
 }
