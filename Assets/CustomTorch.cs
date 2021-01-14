@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
@@ -13,35 +14,58 @@ public class CustomTorch : MonoBehaviour
     [SerializeField] private float torchRangeOffset;
     [SerializeField] private LayerMask torchBlockLayer;
 
+    public bool torchOn;
     private float radius;
 
     private PlatformerPlayerSprite rot;
+
+    private TorchBattery battery;
+    private bool outOfBattery = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rot = GetComponentInParent<PlatformerPlayerSprite>();
+        battery = GetComponent<TorchBattery>() ? GetComponent<TorchBattery>() : null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (battery)
+        {
+            CheckForBattery();
+        }
         Torch();
         RotateTorch();
     }
 
+    private void CheckForBattery()
+    {
+        if(battery.torchBattery <= 0)
+        {
+            outOfBattery = true;
+        }
+        else
+        {
+            outOfBattery = false;
+        }
+    }
+
     private void Torch()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKey(KeyCode.F) && !outOfBattery)
         {
             TorchRange();
             selfLight.SetActive(true);
             torch.enabled = true;
+            torchOn = true;
         }
         else
         {
             selfLight.SetActive(false);
             torch.enabled = false;
+            torchOn = false;
         }
     }
 

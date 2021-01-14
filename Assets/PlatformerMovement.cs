@@ -11,18 +11,23 @@ public class PlatformerMovement : MonoBehaviour
 
     //JumpField
     [SerializeField] private float jumpForce;
-    private float curJumpForce;
     
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Vector3 groundCheckOffset;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayer;
     public bool isGrounded;
+    [SerializeField] private float groundDelay;
+    private float rememberGroundTime = 0;
 
     //Ladder Field
     public bool onLadder;
     public bool ladderBelow;
     [SerializeField] private float climbSpeed = 1.0f;
     private float initGravity;
+
+    [SerializeField] private Vector3 platformCheckOffset;
+    [SerializeField] private float platformCheckRadius;
+    [SerializeField] private LayerMask platformLayer;
 
     //OneWayPlatform Field
     public bool onPlatform;
@@ -52,6 +57,7 @@ public class PlatformerMovement : MonoBehaviour
     void Update()
     {
         GroundCheck();
+        PlatformCheck();
 
         //Movement Input
         MovementInput();
@@ -137,21 +143,40 @@ public class PlatformerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, yVelo);
     }
 
+    private void PlatformCheck()
+    {
+        RaycastHit2D platform = Physics2D.Raycast(transform.position + platformCheckOffset, -transform.up, platformCheckRadius, platformLayer);
+
+        if (platform)
+        {
+            onPlatform = true;
+        }
+        else
+        {
+            onPlatform = false;
+        }
+
+    }
+
     private void GroundCheck()
     {
-        Collider2D collider = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-        isGrounded = collider ? true : false;
-
-        if (collider)
+        RaycastHit2D ground = Physics2D.Raycast(transform.position + groundCheckOffset, -transform.up, groundCheckRadius, groundLayer);
+        
+        if (ground)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform"))
+            isGrounded = true;
+            rememberGroundTime = groundDelay;
+        }
+        else
+        {
+            if(rememberGroundTime > 0)
             {
-                onPlatform = true;
+                rememberGroundTime -= Time.deltaTime;
             }
-            else
+
+            if(rememberGroundTime <= 0)
             {
-                onPlatform = false;
+                isGrounded = false;
             }
         }
 
@@ -163,10 +188,7 @@ public class PlatformerMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (groundCheck)
-        {
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
+        Gizmos.DrawLine(transform.position + groundCheckOffset, transform.position + groundCheckOffset + -transform.up * groundCheckRadius);
     }
 
     IEnumerator ResetPlatformCheck()
