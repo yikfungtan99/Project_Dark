@@ -13,6 +13,23 @@ public class PlayerTorch : NetworkBehaviour
     {
         if (!hasAuthority) return;
         TorchInput();
+        CheckForBattery();
+    }
+
+    private void CheckForBattery()
+    {
+        if (torch.battery.torchBattery <= 0)
+        {
+            torch.outOfBattery = true;
+            if (torch.torchOn)
+            {
+                CmdTorch();
+            }
+        }
+        else
+        {
+            torch.outOfBattery = false;
+        }
     }
 
     void TorchInput()

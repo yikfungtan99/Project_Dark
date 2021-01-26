@@ -18,7 +18,7 @@ public class CustomTorch : MonoBehaviour
     public bool torchOn;
     private float radius;
 
-    private TorchBattery battery;
+    public TorchBattery battery;
     public bool outOfBattery = false;
 
     [SerializeField] private PlatformerMovement move;
@@ -35,23 +35,6 @@ public class CustomTorch : MonoBehaviour
         if (torchOn)
         {
             TorchRange();
-        }
-
-        if (battery)
-        {
-            CheckForBattery();
-        }
-    }
-
-    private void CheckForBattery()
-    {
-        if(battery.torchBattery <= 0)
-        {
-            outOfBattery = true;
-        }
-        else
-        {
-            outOfBattery = false;
         }
     }
 
