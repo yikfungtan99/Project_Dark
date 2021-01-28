@@ -3,9 +3,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlatformerMovement : NetworkBehaviour
 {
+    //Input Field
+    private PlayerInput playerInput;
+    private Controls controls;
+
     //Movement Field
     [SerializeField] private float moveSpeed;
     private float moveX;
@@ -50,7 +56,44 @@ public class PlatformerMovement : NetworkBehaviour
     //Network
     private NetworkIdentity net;
 
-    
+    private void Awake()
+    {
+        controls = new Controls();
+        playerInput = GetComponent<PlayerInput>();
+    }
+
+    private void OnEnable()
+    {
+        if(playerInput.controller == InputController.KEYBOARD)
+        {
+            if (playerInput.playerNumberOnDevice == 0)
+            {
+                controls.Player1.Jump.performed += Jump;
+                controls.Player1.Enable();   
+            }
+            else
+            {
+                controls.Player2.Jump.performed += Jump;
+                controls.Player2.Enable();
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (playerInput.controller == InputController.KEYBOARD)
+        {
+            if (playerInput.playerNumberOnDevice == 0)
+            {
+                controls.Player1.Disable();
+            }
+            else
+            {
+                controls.Player2.Disable();
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +117,7 @@ public class PlatformerMovement : NetworkBehaviour
         //Movement Input
         MovementInput();
         FlipDirection();
-        JumpInput();
+        //JumpInput();
         LadderInput();
         OneWayPlatformInput();
 
@@ -95,7 +138,23 @@ public class PlatformerMovement : NetworkBehaviour
 
     private void MovementInput()
     {
-        moveX = Input.GetAxisRaw("Horizontal") * moveSpeed;
+        Vector2 movementInput = new Vector2();
+        var movement = new Vector2();
+        if (playerInput.controller == InputController.KEYBOARD)
+        {
+            if(playerInput.playerNumberOnDevice == 0)
+            {
+                movementInput = controls.Player1.Movement.ReadValue<Vector2>();
+            }
+            else
+            {
+                movementInput = controls.Player2.Movement.ReadValue<Vector2>();
+            }
+        }
+
+        movement.x = movementInput.x;
+
+        moveX = movement.x * moveSpeed; 
     }
 
   
@@ -122,9 +181,23 @@ public class PlatformerMovement : NetworkBehaviour
 
     private void JumpInput()
     {
-        if (Input.GetKeyDown(KeyCode.W) && !onLadder)
+        if (onLadder) return;
+        if (playerInput.controller == InputController.KEYBOARD)
         {
-            Jump();
+            if (playerInput.playerNumberOnDevice == 0)
+            {
+                if (controls.Player1.Jump.triggered)
+                {
+                    print("JUMP");
+                }
+            }
+            else
+            {
+                if (controls.Player2.Jump.triggered)
+                {
+                    print("JUMP");
+                }
+            }
         }
     }
 
@@ -164,7 +237,7 @@ public class PlatformerMovement : NetworkBehaviour
         }
     }
 
-    private void Jump()
+    public void Jump(CallbackContext ctx)
     {
         if (!isGrounded) return;
         float yVelo = jumpForce;
