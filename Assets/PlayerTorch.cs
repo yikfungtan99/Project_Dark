@@ -23,7 +23,7 @@ public class PlayerTorch : NetworkBehaviour
             torch.outOfBattery = true;
             if (torch.torchOn)
             {
-                CmdTorch();
+                CmdTorchOff();
             }
         }
         else
@@ -36,19 +36,38 @@ public class PlayerTorch : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && !torch.outOfBattery)
         {
-            CmdTorch();
+            if (!torch.torchOn)
+            {
+                CmdTorchOn();
+            }
+            else
+            {
+                CmdTorchOff();
+            }
         }
     }
 
     [Command]
-    void CmdTorch()
+    public void CmdTorchOn()
     {
-        RpcTorch();
+        RpcTorchOn();
     }
 
     [ClientRpc]
-    void RpcTorch()
+    public void RpcTorchOn()
     {
-        torch.Torch();
+        torch.TorchOn();
+    }
+    
+    [Command]
+    public void CmdTorchOff()
+    {
+        RpcTorchOff();
+    }
+
+    [ClientRpc]
+    public void RpcTorchOff()
+    {
+        torch.TorchOff();
     }
 }
