@@ -2,17 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerTorch : NetworkBehaviour
 {
-
     [SerializeField] private CustomTorch torch;
+
 
     // Update is called once per frame
     void Update()
     {
         if (!hasAuthority) return;
-        TorchInput();
         CheckForBattery();
     }
 
@@ -32,9 +32,9 @@ public class PlayerTorch : NetworkBehaviour
         }
     }
 
-    void TorchInput()
+    public void Torch(CallbackContext ctx)
     {
-        if (Input.GetKeyDown(KeyCode.F) && !torch.outOfBattery)
+        if (!torch.outOfBattery)
         {
             if (!torch.torchOn)
             {

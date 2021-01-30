@@ -20,6 +20,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Torch",
+                    "type": "Button",
+                    "id": "f5b0c15b-5976-4a32-b734-6ca6f65e2890",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -88,6 +96,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "52d91d4e-e22c-4562-876c-190728797a70",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Torch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -107,6 +126,14 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "c7e361f2-4a16-448a-af71-93ac28c49bd1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Torch",
+                    "type": "Button",
+                    "id": "9ae055b4-0750-4ac4-b5e3-cfd80a434c50",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -178,6 +205,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "27d28755-07e4-4654-87a2-64077ac46fb9",
+                    "path": "<Keyboard>/slash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Torch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
