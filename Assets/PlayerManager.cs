@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get { return _instance; } }
 
     public int curPlayerNum;
+    public bool splitKeyboard = false;
 
     private void Awake()
     {

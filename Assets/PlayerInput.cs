@@ -3,20 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum InputController
-{
-    KEYBOARD,
-    GAMEPAD
-}
-
 public class PlayerInput : NetworkBehaviour
 {
     public int playerNumberOnDevice;
-    public InputController controller;
+    public bool splitKeyboard = false;
 
     public Controls controls;
 
     public Vector2 movementInput;
+
+    PlatformerMovement move;
+    PlayerTorch torch;
 
     private void Awake()
     {
@@ -27,6 +24,9 @@ public class PlayerInput : NetworkBehaviour
     {
         base.OnStartClient();
 
+        move = GetComponent<PlatformerMovement>();
+        torch = GetComponent<PlayerTorch>();
+
         if (hasAuthority)
         {
             playerNumberOnDevice = PlayerManager.Instance.curPlayerNum;
@@ -36,37 +36,34 @@ public class PlayerInput : NetworkBehaviour
         {
             print("I don't have authority here");
         }
-        
 
-        if (controller == InputController.KEYBOARD)
+        if (!splitKeyboard)
         {
-            if (playerNumberOnDevice == 0)
-            {
-                controls.Player1.Enable();
-                controls.Player1.Torch.performed += GetComponent<PlayerTorch>().Torch;
-            }
-            else
-            {
-                controls.Player2.Enable();
-                controls.Player2.Torch.performed += GetComponent<PlayerTorch>().Torch;
-            }
+            controls.Player1.Enable();
+            controls.Player1.Torch.performed += torch.Torch;
+            controls.Player1.Jump.performed += move.JumpCall;
+        }
+        else
+        {
+            controls.Player2.Enable();
+            controls.Player2.Torch.performed += torch.Torch;
+            controls.Player2.Jump.performed += move.JumpCall;
         }
     }
 
     private void OnDisable()
     {
-        if (controller == InputController.KEYBOARD)
+        if (!splitKeyboard)
         {
-            if (playerNumberOnDevice == 0)
-            {
-                controls.Player1.Disable();
-                controls.Player1.Torch.performed -= GetComponent<PlayerTorch>().Torch;
-            }
-            else
-            {
-                controls.Player2.Disable();
-                controls.Player2.Torch.performed -= GetComponent<PlayerTorch>().Torch;
-            }
+            controls.Player1.Disable();
+            controls.Player1.Torch.performed -= GetComponent<PlayerTorch>().Torch;
+            controls.Player1.Jump.performed -= move.JumpCall;
+        }
+        else
+        {
+            controls.Player2.Disable();
+            controls.Player2.Torch.performed -= GetComponent<PlayerTorch>().Torch;
+            controls.Player1.Jump.performed -= move.JumpCall;
         }
     }
 
@@ -77,16 +74,15 @@ public class PlayerInput : NetworkBehaviour
 
     private void ReadInput()
     {
-        if (controller == InputController.KEYBOARD)
+      
+        if (!splitKeyboard)
         {
-            if (playerNumberOnDevice == 0)
-            {
-                movementInput = controls.Player1.Movement.ReadValue<Vector2>();
-            }
-            else
-            {
-                movementInput = controls.Player2.Movement.ReadValue<Vector2>();
-            }
+            movementInput = controls.Player1.Movement.ReadValue<Vector2>();
         }
+        else
+        {
+            movementInput = controls.Player2.Movement.ReadValue<Vector2>();
+        }
+        
     }
 }

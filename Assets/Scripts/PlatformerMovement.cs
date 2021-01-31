@@ -123,7 +123,6 @@ public class PlatformerMovement : NetworkBehaviour
         OneWayPlatformInput();
 
         Movement();
-        Jump();
     }
 
     //private void ReadInput()
@@ -232,15 +231,17 @@ public class PlatformerMovement : NetworkBehaviour
     //    }
     //}
 
+    public void JumpCall(CallbackContext ctx)
+    {
+        Jump();
+    }
+
     private void Jump()
     {
         if (!isGrounded) return;
-
-        if (input.movementInput.y > 0)
-        {
-            float yVelo = jumpForce;
-            rb.velocity = new Vector2(rb.velocity.x, yVelo);
-        }
+        print("JUMP");
+        float yVelo = jumpForce;
+        rb.velocity = new Vector2(rb.velocity.x, yVelo);
     }
 
     private void PlatformCheck()

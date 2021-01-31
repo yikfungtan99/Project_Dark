@@ -55,6 +55,7 @@ namespace LightReflectiveMirror
 
         public void ConnectToRelay()
         {
+            print("Connecting...");
             if (!_connectedToRelay)
             {
                 clientToServerTransport.OnClientConnected = ConnectedToRelay;
