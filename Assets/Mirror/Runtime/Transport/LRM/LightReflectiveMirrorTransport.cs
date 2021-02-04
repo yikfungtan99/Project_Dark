@@ -16,6 +16,7 @@ namespace LightReflectiveMirror
         public float heartBeatInterval = 3;
         public bool connectOnAwake = true;
         public string authenticationKey = "Secret Auth Key";
+        public UnityEvent diconnectedFromRelay;
         [Header("Server Hosting Data")]
         public string serverName = "My awesome server!";
         public string extraServerData = "Map 1";
@@ -24,10 +25,6 @@ namespace LightReflectiveMirror
         [Header("Server List")]
         public UnityEvent serverListUpdated;
         public List<RelayServerInfo> relayServerList { private set; get; } = new List<RelayServerInfo>();
-
-        [Header("Connection Status")]
-        public bool connectedToRelay = false;
-
         [Header("Server Information")]
         public int serverId = -1;
 
@@ -53,13 +50,19 @@ namespace LightReflectiveMirror
             InvokeRepeating(nameof(SendHeartbeat), heartBeatInterval, heartBeatInterval);
         }
 
+        private void OnEnable()
+        {
+            clientToServerTransport.OnClientConnected = ConnectedToRelay;
+            clientToServerTransport.OnClientDataReceived = DataReceived;
+            clientToServerTransport.OnClientDisconnected = Disconnected;
+        }
+
+        void Disconnected() => diconnectedFromRelay?.Invoke();
+
         public void ConnectToRelay()
         {
-            print("Connecting...");
             if (!_connectedToRelay)
             {
-                clientToServerTransport.OnClientConnected = ConnectedToRelay;
-                clientToServerTransport.OnClientDataReceived = DataReceived;
                 _clientSendBuffer = new byte[clientToServerTransport.GetMaxPacketSize()];
 
                 clientToServerTransport.ClientConnect(serverIP);
@@ -79,7 +82,6 @@ namespace LightReflectiveMirror
         void ConnectedToRelay()
         {
             _connectedToRelay = true;
-            connectedToRelay = _connectedToRelay;
         }
 
         public void RequestServerList()
@@ -365,7 +367,6 @@ namespace LightReflectiveMirror
             _isClient = false;
             _isServer = false;
             _connectedToRelay = false;
-            connectedToRelay = false;
             clientToServerTransport.Shutdown();
         }
 

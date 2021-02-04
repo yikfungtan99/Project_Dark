@@ -233,13 +233,13 @@ public class PlatformerMovement : NetworkBehaviour
 
     public void JumpCall(CallbackContext ctx)
     {
+        if (!hasAuthority) return;
         Jump();
     }
 
     private void Jump()
     {
         if (!isGrounded) return;
-        print("JUMP");
         float yVelo = jumpForce;
         rb.velocity = new Vector2(rb.velocity.x, yVelo);
     }

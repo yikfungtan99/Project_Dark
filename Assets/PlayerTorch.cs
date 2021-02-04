@@ -13,7 +13,7 @@ public class PlayerTorch : NetworkBehaviour
     void Update()
     {
         if (!hasAuthority) return;
-        CheckForBattery();
+        //CheckForBattery();
     }
 
     private void CheckForBattery()

@@ -174,7 +174,7 @@ namespace Mirror
         [NonSerialized]
         public bool isNetworkActive;
 
-        static NetworkConnection clientReadyConnection;
+        protected static NetworkConnection clientReadyConnection;
 
         /// <summary>
         /// This is true if the client loaded a new scene when connecting to the server.

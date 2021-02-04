@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1847227185826504454}
   - component: {fileID: 1847227185826504449}
   m_Layer: 0
-  m_Name: PlayerManager
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: PlayerNetwork
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
+  playerName: 
   playerPrefab: {fileID: 583809001150326004, guid: 43bf4ac6080de794ca91b853f24020ba,
     type: 3}
 --- !u!114 &1847227185826504449

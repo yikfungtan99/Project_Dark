@@ -44,7 +44,7 @@ namespace Mirror
 
             GUILayout.BeginArea(new Rect(10 + offsetX, 40 + offsetY, 215, 9999));
 
-            GUILayout.Label("Relay connected: " + GetComponent<LightReflectiveMirrorTransport>().connectedToRelay);
+            GUILayout.Label("Relay connected: " + GetComponent<LightReflectiveMirrorTransport>().Available());
 
             if (!NetworkClient.isConnected && !NetworkServer.active)
             {

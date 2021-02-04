@@ -242,6 +242,9 @@ MonoBehaviour:
   heartBeatInterval: 3
   connectOnAwake: 1
   authenticationKey: Secret Auth Key
+  diconnectedFromRelay:
+    m_PersistentCalls:
+      m_Calls: []
   serverName: My awesome server!
   extraServerData: Map 1
   maxServerPlayers: 10
@@ -249,7 +252,6 @@ MonoBehaviour:
   serverListUpdated:
     m_PersistentCalls:
       m_Calls: []
-  connectedToRelay: 0
   serverId: -1
 --- !u!114 &242189787
 MonoBehaviour:
@@ -2661,6 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curPlayerNum: 0
+  splitKeyboard: 0
 --- !u!114 &1515912301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3011,7 +3014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLite: {fileID: 1607736125}
-  intensityOnStart: 1
+  intensityOnStart: 0.1
 --- !u!1 &1660588150
 GameObject:
   m_ObjectHideFlags: 0
