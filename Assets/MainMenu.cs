@@ -28,10 +28,16 @@ public class MainMenu : MonoBehaviour
         }
 
         playerNameInput.text = PlayerPrefs.GetString("playerName");
+
+        nm.lrm.diconnectedFromRelay.AddListener(FailedToConnectToRelay);
     }
 
     public void LoadGamePanel()
     {
+        if (nm.lrm.Available())
+        {
+            nm.lrm.Shutdown();
+        }
         playerNameInput.gameObject.SetActive(true);
         gamePanel.SetActive(true);
         mainMenuPanel.SetActive(false);
@@ -85,7 +91,7 @@ public class MainMenu : MonoBehaviour
     {
         StopCoroutine(ConnectingToRelay());
         connectingPanel.SetActive(false);
-        serverIsOfflinePanel.SetActive(true);
+        //serverIsOfflinePanel.SetActive(true);
     }
 
     public void QuitGame()

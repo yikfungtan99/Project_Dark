@@ -16,9 +16,10 @@ public class NetworkManagerCustom : NetworkManager
     public static NetworkManagerCustom Instance { get { return _instance; } }
 
     [Scene] public string lobbyScene;
+    [Scene] public string gameScene;
 
+    public GameObject playerList;
     public int numOfActivePlayers;
-    public List<PlayerNetwork> playerList;
 
     public override void Awake()
     {
@@ -31,14 +32,15 @@ public class NetworkManagerCustom : NetworkManager
         {
             _instance = this;
         }
+
+        lrm = (LightReflectiveMirrorTransport)transport;
+
     }
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        lrm = (LightReflectiveMirrorTransport)transport;
-        playerList = new List<PlayerNetwork>();
     }
 
     public void ConnectToRelay()
@@ -61,20 +63,22 @@ public class NetworkManagerCustom : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);
+       
+        if(LobbyManager.Instance) LobbyManager.Instance.RpcServerId(lrm.serverId);
     }
 
     public void AddNetworkPlayer(PlayerNetwork pn)
     {
-        playerList.Clear();
+        //splayerList.Clear();
 
-        GameObject pl = GameObject.Find("PlayerList");
+        //GameObject pl = GameObject.Find("PlayerList");
 
-        for (int i = 0; i < pl.transform.childCount; i++)
-        {
-            playerList.Add(pl.transform.GetChild(i).GetComponent<PlayerNetwork>());
-        }
+        //for (int i = 0; i < pl.transform.childCount; i++)
+        //{
+        //    playerList.Add(pl.transform.GetChild(i).GetComponent<PlayerNetwork>());
+        //}
 
-        LobbyManager.Instance.UpdateLobby();
+        if (LobbyManager.Instance) LobbyManager.Instance.UpdateLobby();
     }
 
 }

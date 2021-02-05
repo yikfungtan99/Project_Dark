@@ -19,11 +19,29 @@ public class PlayerNetwork : NetworkBehaviour
     private void Start()
     {
         nm = NetworkManagerCustom.Instance;
-        transform.SetParent(GameObject.Find("PlayerList").transform);
 
-        if (hasAuthority)
+        if (GameObject.Find("PlayerList"))
         {
-            CmdAddNetworkPlayer();
+            Transform pl = GameObject.Find("PlayerList").transform;
+            if (pl)
+            {
+                transform.SetParent(pl);
+                if (hasAuthority)
+                {
+                    CmdAddNetworkPlayer();
+                }
+            }
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    [Command]
+    private void CmdSetPlayerName()
+    {
+        if (PlayerPrefs.HasKey("playerName"))
+        {
+            playerName = PlayerPrefs.GetString("playerName");
         }
     }
 
@@ -32,11 +50,7 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (nm)
         {
-            if (PlayerPrefs.HasKey("playerName"))
-            {
-                playerName = PlayerPrefs.GetString("playerName");
-            }
-
+            CmdSetPlayerName();
             RpcAddNetworkPlayer();
         }
     }
@@ -75,6 +89,7 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void CreateLocalPlayer()
     {
+        if (!nm) return;
         if (localPlayer) return;
         if (nm.numOfActivePlayers >= 4) return;
         if(numOfLocalPlayer < 4)
@@ -83,6 +98,7 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 if (!splitKeyboard)
                 {
+                    print("HI");
                     CmdCreateLocalPlayer();
                     splitKeyboard = true;
                 }
@@ -115,4 +131,6 @@ public class PlayerNetwork : NetworkBehaviour
     //    yield return new WaitForSeconds(0.02f);
     //    LobbyManager.Instance.AddLobbyPlayer(playerName + "(" + numOfLocalPlayer + ")", true);
     //}
+
+    
 }

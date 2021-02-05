@@ -18,6 +18,8 @@ public class LobbyManager : NetworkBehaviour
 
     [SerializeField] private GameObject playerList;
 
+    [SerializeField] private TextMeshProUGUI txtLobbyId;
+
     public void Awake()
     {
         if (_instance != null && _instance != this)
@@ -34,6 +36,8 @@ public class LobbyManager : NetworkBehaviour
     void Start()
     {
         nm = NetworkManagerCustom.Instance ? NetworkManagerCustom.Instance : null;
+
+        playerList = nm.playerList;
     }
 
     public void AddLobbyPlayer(string name, bool localPlayer)
@@ -42,6 +46,12 @@ public class LobbyManager : NetworkBehaviour
         nm.numOfActivePlayers += 1;
         lp.SetName(name);
 
+    }
+
+    [ClientRpc]
+    public void RpcServerId(int id)
+    {
+        txtLobbyId.text = "Lobby ID: " + id;
     }
 
     public void UpdateLobby()
@@ -65,6 +75,14 @@ public class LobbyManager : NetworkBehaviour
 
     public void LeaveLobby()
     {
-        SceneManager.LoadScene(0);
+        nm.numOfActivePlayers = 0;
+        nm.StopHost();
+        nm.StopClient();
+        nm.lrm.Shutdown();
+    }
+
+    public void StartGame()
+    {
+        nm.ServerChangeScene(nm.gameScene);
     }
 }
