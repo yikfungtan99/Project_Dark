@@ -34,6 +34,7 @@ public class PlayerTorch : NetworkBehaviour
 
     public void Torch(CallbackContext ctx)
     {
+        if (!hasAuthority) return;
         if (!torch.outOfBattery)
         {
             if (!torch.torchOn)

@@ -3609,7 +3609,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   runInBackground: 1
   autoStartServerBuild: 1
-  showDebugMessages: 1
+  showDebugMessages: 0
   serverTickRate: 120
   offlineScene: Assets/Scenes/MainMenu.unity
   onlineScene: Assets/Scenes/Lobby.unity
@@ -3628,7 +3628,7 @@ MonoBehaviour:
   - {fileID: 8988253221736984562, guid: 31e61f5d36ba0134b9c816a5effce450, type: 3}
   lrm: {fileID: 0}
   lobbyScene: Assets/Scenes/Lobby.unity
-  gameScene: Assets/Scenes/New Scene.unity
+  gameScene: Assets/Scenes/NetworkTestLevel.unity
   playerList: {fileID: 1196662949}
   numOfActivePlayers: 0
 --- !u!4 &1292091254

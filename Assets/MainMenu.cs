@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour
 {
@@ -118,6 +119,19 @@ public class MainMenu : MonoBehaviour
         {
             playerNameInput.text = "SomeDumbName";
             PlayerPrefs.SetString("playerName", playerNameInput.text);
+        }
+    }
+
+    private void Update()
+    {
+        if (!Application.isFocused) return;
+        if (Gamepad.current.buttonSouth.wasPressedThisFrame)
+        {
+            print(Gamepad.current.name);
+            //for (int i = 0; i < Gamepad.all.Count; i++)
+            //{
+            //    print(Gamepad.all[i].name + "   " + i);
+            //}
         }
     }
 }

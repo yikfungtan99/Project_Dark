@@ -112,7 +112,7 @@ public class PlatformerMovement : NetworkBehaviour
     void Update()
     {
         if (!net.hasAuthority) return;
-
+        if (!input) return;
         //ReadInput();
 
         GroundCheck();

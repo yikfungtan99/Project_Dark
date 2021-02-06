@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/New Scene.unity
     guid: cb9c45bd176ec87489d06ff63bf7e510
+  - enabled: 1
+    path: Assets/Scenes/NetworkTestLevel.unity
+    guid: fea1a487fcca6714cbe6a53680845977
   m_configObjects: {}

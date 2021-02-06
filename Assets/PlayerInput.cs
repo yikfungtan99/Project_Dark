@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class PlayerInput : NetworkBehaviour
 {
+    [SyncVar] public ControllerType controller;
+
+    [SyncVar] public int gamepadNum = 0;
     public int playerNumberOnDevice;
-    public bool splitKeyboard = false;
 
     public Controls controls;
 
@@ -27,43 +31,61 @@ public class PlayerInput : NetworkBehaviour
         move = GetComponent<PlatformerMovement>();
         torch = GetComponent<PlayerTorch>();
 
-        if (hasAuthority)
+        switch (controller)
         {
-            playerNumberOnDevice = PlayerManager.Instance.curPlayerNum;
-            PlayerManager.Instance.AddPlayerNum();
-        }
-        else
-        {
-            print("I don't have authority here");
-        }
-
-        if (!splitKeyboard)
-        {
-            controls.Player1.Enable();
-            controls.Player1.Torch.performed += torch.Torch;
-            controls.Player1.Jump.performed += move.JumpCall;
-        }
-        else
-        {
-            controls.Player2.Enable();
-            controls.Player2.Torch.performed += torch.Torch;
-            controls.Player2.Jump.performed += move.JumpCall;
+            case ControllerType.KEYBOARD1:
+                controls.Player1.Enable();
+                controls.Player1.Torch.performed += torch.Torch;
+                controls.Player1.Jump.performed += move.JumpCall;
+                InputUser user1 = InputUser.PerformPairingWithDevice(Keyboard.current);
+                user1.AssociateActionsWithUser(controls);
+                break;
+            case ControllerType.KEYBOARD2:
+                controls.Player2.Enable();
+                controls.Player2.Torch.performed += torch.Torch;
+                controls.Player2.Jump.performed += move.JumpCall;
+                InputUser user2 = InputUser.PerformPairingWithDevice(Keyboard.current);
+                user2.AssociateActionsWithUser(controls);
+                break;
+            case ControllerType.GAMEPAD:
+                controls.Player1.Enable();
+                controls.Player1.Torch.performed += torch.Torch;
+                controls.Player1.Jump.performed += move.JumpCall;
+                InputUser user3 = InputUser.PerformPairingWithDevice(Gamepad.all[gamepadNum]);
+                user3.AssociateActionsWithUser(controls);
+                break;
+            default:
+                controls.Player1.Enable();
+                controls.Player1.Torch.performed += torch.Torch;
+                controls.Player1.Jump.performed += move.JumpCall;
+                break;
         }
     }
 
     private void OnDisable()
     {
-        if (!splitKeyboard)
+        switch (controller)
         {
-            controls.Player1.Disable();
-            controls.Player1.Torch.performed -= GetComponent<PlayerTorch>().Torch;
-            controls.Player1.Jump.performed -= move.JumpCall;
-        }
-        else
-        {
-            controls.Player2.Disable();
-            controls.Player2.Torch.performed -= GetComponent<PlayerTorch>().Torch;
-            controls.Player1.Jump.performed -= move.JumpCall;
+            case ControllerType.KEYBOARD1:
+                controls.Player1.Disable();
+                controls.Player1.Torch.performed -= torch.Torch;
+                controls.Player1.Jump.performed -= move.JumpCall;
+                break;
+            case ControllerType.KEYBOARD2:
+                controls.Player2.Disable();
+                controls.Player2.Torch.performed -= torch.Torch;
+                controls.Player2.Jump.performed -= move.JumpCall;
+                break;
+            case ControllerType.GAMEPAD:
+                controls.Player1.Disable();
+                controls.Player1.Torch.performed -= torch.Torch;
+                controls.Player1.Jump.performed -= move.JumpCall;
+                break;
+            default:
+                controls.Player1.Disable();
+                controls.Player1.Torch.performed -= torch.Torch;
+                controls.Player1.Jump.performed -= move.JumpCall;
+                break;
         }
     }
 
@@ -74,15 +96,20 @@ public class PlayerInput : NetworkBehaviour
 
     private void ReadInput()
     {
-      
-        if (!splitKeyboard)
+        switch (controller)
         {
-            movementInput = controls.Player1.Movement.ReadValue<Vector2>();
+            case ControllerType.KEYBOARD1:
+                movementInput = controls.Player1.Movement.ReadValue<Vector2>();
+                break;
+            case ControllerType.KEYBOARD2:
+                movementInput = controls.Player2.Movement.ReadValue<Vector2>();
+                break;
+            case ControllerType.GAMEPAD:
+                movementInput = controls.Player1.Movement.ReadValue<Vector2>();
+                break;
+            default:
+                movementInput = controls.Player1.Movement.ReadValue<Vector2>();
+                break;
         }
-        else
-        {
-            movementInput = controls.Player2.Movement.ReadValue<Vector2>();
-        }
-        
     }
 }
