@@ -243,7 +243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lobby ID: xxxxx'
+  m_text: Offline Lobby
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -860,7 +860,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press "/" on keyboard to join, Press "A" on gamepad to join
+  m_text: Press "/" , "F"on keyboard or Press "A" on gamepad to join
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1648,6 +1648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701323936}
   - component: {fileID: 1701323937}
+  - component: {fileID: 1701323939}
   - component: {fileID: 1701323938}
   m_Layer: 0
   m_Name: LobbyManager
@@ -1688,7 +1689,9 @@ MonoBehaviour:
   lobbyPlayer: {fileID: 8988253221736984562, guid: 31e61f5d36ba0134b9c816a5effce450,
     type: 3}
   playerList: {fileID: 0}
+  lobbyId: 0
   txtLobbyId: {fileID: 397694614}
+  btnStart: {fileID: 1325654657}
 --- !u!114 &1701323938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,6 +1708,20 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &1701323939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701323935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0388785586cdd4890f1e7ab27ddec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControllers: 
+  gamepadUsed: 
 --- !u!1 &1707722769
 GameObject:
   m_ObjectHideFlags: 0

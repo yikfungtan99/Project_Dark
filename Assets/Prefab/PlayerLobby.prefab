@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1847227185826504455}
-  - component: {fileID: 1847227185826504454}
   - component: {fileID: 1847227185826504449}
+  - component: {fileID: 1057013711704546881}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerLobby
   m_TagString: PlayerNetwork
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,23 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1847227185826504454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847227185826504448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7539f2d164d8582439f219306a8cdd9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0
-  playerName: 
-  playerPrefab: {fileID: 583809001150326004, guid: 43bf4ac6080de794ca91b853f24020ba,
-    type: 3}
 --- !u!114 &1847227185826504449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,3 +48,23 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &1057013711704546881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847227185826504448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b00711f50f97948b5c1cf35a37ea2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  localPlayer: 0
+  controller: 0
+  gamepadNum: -1
+  playerName: 
+  playerPrefab: {fileID: 0}
+  AddedToLobby: 0

@@ -60,25 +60,15 @@ public class NetworkManagerCustom : NetworkManager
         ServerChangeScene(lobbyScene);
     }
 
-    public override void OnServerAddPlayer(NetworkConnection conn)
+    public override void OnServerSceneChanged(string sceneName)
     {
-        base.OnServerAddPlayer(conn);
-       
-        if(LobbyManager.Instance) LobbyManager.Instance.RpcServerId(lrm.serverId);
+        base.OnServerSceneChanged(sceneName);
+        LobbyManager.Instance.lobbyId = lrm.serverId;
     }
 
-    public void AddNetworkPlayer(PlayerNetwork pn)
-    {
-        //splayerList.Clear();
-
-        //GameObject pl = GameObject.Find("PlayerList");
-
-        //for (int i = 0; i < pl.transform.childCount; i++)
-        //{
-        //    playerList.Add(pl.transform.GetChild(i).GetComponent<PlayerNetwork>());
-        //}
-
-        if (LobbyManager.Instance) LobbyManager.Instance.UpdateLobby();
-    }
+    //public void AddNetworkPlayer()
+    //{
+    //    if (LobbyManager.Instance) LobbyManager.Instance.UpdateLobby();
+    //}
 
 }

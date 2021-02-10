@@ -14,7 +14,7 @@ public class GameManager : NetworkBehaviour
         if (isClientOnly) return;
         for (int i = 0; i < nm.playerList.transform.childCount; i++)
         {
-            PlayerNetwork pn = nm.playerList.transform.GetChild(i).GetComponent<PlayerNetwork>();
+            PlayerLobby pn = nm.playerList.transform.GetChild(i).GetComponent<PlayerLobby>();
             pn.CmdSpawnPlayer(pn.gamepadNum);
         }
     }
