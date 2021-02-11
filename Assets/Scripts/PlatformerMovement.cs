@@ -51,9 +51,6 @@ public class PlatformerMovement : NetworkBehaviour
     [SerializeField] private Collider2D platformCollider;
     [SerializeField] private Collider2D hitCollider;
 
-    //Network
-    private NetworkIdentity net;
-
     //private void Awake()
     //{
     //    controls = new Controls();
@@ -104,14 +101,12 @@ public class PlatformerMovement : NetworkBehaviour
         sprite = GetComponent<SpriteRenderer>() ? GetComponent<SpriteRenderer>() : null;
 
         initGravity = rb.gravityScale;
-
-        net = GetComponent<NetworkIdentity>() ? GetComponent<NetworkIdentity>() : null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!net.hasAuthority) return;
+        if (!hasAuthority) return;
         if (!input) return;
         //ReadInput();
 

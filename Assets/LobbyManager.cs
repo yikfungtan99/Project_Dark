@@ -72,13 +72,12 @@ public class LobbyManager : NetworkBehaviour
         if (!Application.isFocused) return;
         if (SceneManager.GetActiveScene().name != "Lobby") return;
         if (!nm) return;
-        if (nm.numOfActivePlayers >= 4) return;
        
         if (Input.GetKeyDown(KeyCode.F))
         {
             print("F");
             if (pm.StorePlayerControlType(ControllerType.KEYBOARD1)){
-                CmdRequestPlayer(ControllerType.KEYBOARD1, -1, netIdentity.connectionToClient);
+                CmdRequestPlayer(PlayerPrefs.GetString("playerName"), ControllerType.KEYBOARD1, -1, netIdentity.connectionToClient);
             }
             else
             {
@@ -91,7 +90,7 @@ public class LobbyManager : NetworkBehaviour
             print("/");
             if (pm.StorePlayerControlType(ControllerType.KEYBOARD2))
             {
-                CmdRequestPlayer(ControllerType.KEYBOARD2, -1, netIdentity.connectionToClient);
+                CmdRequestPlayer(PlayerPrefs.GetString("playerName"), ControllerType.KEYBOARD2, -1, netIdentity.connectionToClient);
             }
             else
             {
@@ -116,7 +115,7 @@ public class LobbyManager : NetworkBehaviour
 
                 if (pm.StorePlayerControlType(ControllerType.GAMEPAD, cnum))
                 {
-                    CmdRequestPlayer(ControllerType.GAMEPAD, cnum, netIdentity.connectionToClient);
+                    CmdRequestPlayer(PlayerPrefs.GetString("playerName"), ControllerType.GAMEPAD, cnum, netIdentity.connectionToClient);
                 }
                 else
                 {
@@ -127,12 +126,12 @@ public class LobbyManager : NetworkBehaviour
     }
 
     [Command(ignoreAuthority = true)]
-    private void CmdRequestPlayer(ControllerType con, int gnum, NetworkConnectionToClient conn = null)
+    private void CmdRequestPlayer(string playerName,ControllerType con, int gnum, NetworkConnectionToClient conn = null)
     {
         if (nm.numOfActivePlayers >= 4) return;
         GameObject player = Instantiate(nm.spawnPrefabs[1]);
         PlayerLobby p = player.GetComponent<PlayerLobby>();
-        p.playerName = PlayerPrefs.GetString("playerName");
+        p.playerName = playerName;
         p.gamepadNum = gnum;
         p.controller = con;
 
@@ -170,8 +169,11 @@ public class LobbyManager : NetworkBehaviour
 
     public void UpdateServerId(int oldId, int newId)
     {
-        lobbyId = newId;
-        txtLobbyId.text = "Lobby ID: " + lobbyId;
+        if(newId != -1)
+        {
+            lobbyId = newId;
+            txtLobbyId.text = "Lobby ID: " + lobbyId;
+        }
     }
 
     public void LeaveLobby()

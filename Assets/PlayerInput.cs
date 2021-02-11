@@ -21,12 +21,14 @@ public class PlayerInput : NetworkBehaviour
 
     private void Awake()
     {
+        if (!hasAuthority) return;
         controls = new Controls();
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
+        if (!hasAuthority) return;
 
         move = GetComponent<PlatformerMovement>();
         torch = GetComponent<PlayerTorch>();
@@ -64,6 +66,7 @@ public class PlayerInput : NetworkBehaviour
 
     private void OnDisable()
     {
+        if (!hasAuthority) return;
         switch (controller)
         {
             case ControllerType.KEYBOARD1:
@@ -91,6 +94,7 @@ public class PlayerInput : NetworkBehaviour
 
     private void Update()
     {
+        if (!hasAuthority) return;
         ReadInput();
     }
 
