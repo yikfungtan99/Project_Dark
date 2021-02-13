@@ -21,14 +21,14 @@ public class PlayerInput : NetworkBehaviour
 
     private void Awake()
     {
-        if (!hasAuthority) return;
+        //if (!hasAuthority) return;
         controls = new Controls();
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
-        if (!hasAuthority) return;
+        //if (!hasAuthority) return;
 
         move = GetComponent<PlatformerMovement>();
         torch = GetComponent<PlayerTorch>();

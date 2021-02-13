@@ -75,7 +75,6 @@ public class LobbyManager : NetworkBehaviour
        
         if (Input.GetKeyDown(KeyCode.F))
         {
-            print("F");
             if (pm.StorePlayerControlType(ControllerType.KEYBOARD1)){
                 CmdRequestPlayer(PlayerPrefs.GetString("playerName"), ControllerType.KEYBOARD1, -1, netIdentity.connectionToClient);
             }
@@ -87,7 +86,6 @@ public class LobbyManager : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Slash))
         {
-            print("/");
             if (pm.StorePlayerControlType(ControllerType.KEYBOARD2))
             {
                 CmdRequestPlayer(PlayerPrefs.GetString("playerName"), ControllerType.KEYBOARD2, -1, netIdentity.connectionToClient);
@@ -102,7 +100,6 @@ public class LobbyManager : NetworkBehaviour
         {
             if (Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
-                print("G");
                 int cnum = -1;
                 for (int i = 0; i < Gamepad.all.Count; i++)
                 {
