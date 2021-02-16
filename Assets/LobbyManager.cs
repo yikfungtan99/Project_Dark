@@ -166,25 +166,42 @@ public class LobbyManager : NetworkBehaviour
 
     public void UpdateServerId(int oldId, int newId)
     {
-        if(newId != -1)
+        StartCoroutine(WaitForNetwork(newId));
+    }
+
+    IEnumerator WaitForNetwork(int id)
+    {
+        yield return new WaitUntil(() => nm == true);
+
+        if (nm.lrm.Available())
         {
-            lobbyId = newId;
+            lobbyId = id;
             txtLobbyId.text = "Lobby ID: " + lobbyId;
+        }
+        else
+        {
+            txtLobbyId.text = "Offline Lobby";
         }
     }
 
     public void LeaveLobby()
     {
         nm.numOfActivePlayers = 0;
-        
-        nm.StopHost();
-        nm.StopClient();
 
         if (nm.lrm.Available()) 
-        { 
+        {
+
+            nm.StopServer();
+            nm.StopHost();
+            nm.StopClient();
             nm.lrm.Shutdown();
         }
-        SceneManager.LoadScene(nm.offlineScene);
+        else
+        {
+            nm.StopServer();
+            nm.StopHost();
+            //SceneManager.LoadScene(nm.offlineScene);
+        }
     }
 
     public void StartGame()

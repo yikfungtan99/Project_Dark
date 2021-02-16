@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour
     public void OfflineLobby()
     {
         nm.CreateLobby();
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
     }
 
     public void OnlineLobby()

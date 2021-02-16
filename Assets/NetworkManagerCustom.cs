@@ -63,7 +63,19 @@ public class NetworkManagerCustom : NetworkManager
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);
-        LobbyManager.Instance.lobbyId = lrm.serverId;
+
+        if(sceneName == lobbyScene)
+        {
+            LobbyManager.Instance.lobbyId = lrm.serverId;
+        }
+        else if(sceneName == offlineScene)
+        {
+            for (int i = 0; i < playerList.transform.childCount; i++)
+            {
+                Destroy(playerList.transform.GetChild(i).gameObject);
+            }
+        }
+        
     }
 
     //public void AddNetworkPlayer()
