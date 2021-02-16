@@ -63,36 +63,6 @@ public class PlatformerMovement : NetworkBehaviour
         input = GetComponent<PlayerInput>();
     }
 
-    //private void OnEnable()
-    //{
-    //    if(playerInput.controller == InputController.KEYBOARD)
-    //    {
-    //        if (playerInput.playerNumberOnDevice == 0)
-    //        {
-    //            controls.Player1.Enable();   
-    //        }
-    //        else
-    //        {
-    //            controls.Player2.Enable();
-    //        }
-    //    }
-    //}
-
-    //private void OnDisable()
-    //{
-    //    if (playerInput.controller == InputController.KEYBOARD)
-    //    {
-    //        if (playerInput.playerNumberOnDevice == 0)
-    //        {
-    //            controls.Player1.Disable();
-    //        }
-    //        else
-    //        {
-    //            controls.Player2.Disable();
-    //        }
-    //    }
-    //}
-
     // Start is called before the first frame update
     void Start()
     {
@@ -108,7 +78,6 @@ public class PlatformerMovement : NetworkBehaviour
     {
         if (!hasAuthority) return;
         if (!input) return;
-        //ReadInput();
 
         GroundCheck();
         PlatformCheck();
@@ -119,21 +88,6 @@ public class PlatformerMovement : NetworkBehaviour
 
         Movement();
     }
-
-    //private void ReadInput()
-    //{
-    //    if (playerInput.controller == InputController.KEYBOARD)
-    //    {
-    //        if (playerInput.playerNumberOnDevice == 0)
-    //        {
-    //            movementInput = controls.Player1.Movement.ReadValue<Vector2>();
-    //        }
-    //        else
-    //        {
-    //            movementInput = controls.Player2.Movement.ReadValue<Vector2>();
-    //        }
-    //    }
-    //}
 
     private void OneWayPlatformInput()
     {
@@ -167,64 +121,6 @@ public class PlatformerMovement : NetworkBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
-
-    //private void JumpInput()
-    //{
-    //    if (onLadder) return;
-    //    if (playerInput.controller == InputController.KEYBOARD)
-    //    {
-    //        if (playerInput.playerNumberOnDevice == 0)
-    //        {
-    //            if (controls.Player1.Jump.triggered)
-    //            {
-    //                print("JUMP");
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (controls.Player2.Jump.triggered)
-    //            {
-    //                print("JUMP");
-    //            }
-    //        }
-    //    }
-    //}
-
-    //private void LadderInput()
-    //{
-    //    if (onLadder)
-    //    {
-    //        platformCollider.enabled = false;
-    //        if (Input.GetKey(KeyCode.W))
-    //        {
-    //            rb.velocity = new Vector2(rb.velocity.x, climbSpeed);
-    //        }
-    //        else if (Input.GetKey(KeyCode.S) && ladderBelow)
-    //        {
-    //            rb.velocity = new Vector2(rb.velocity.x, -climbSpeed);
-    //        }
-    //        else
-    //        {
-    //            rb.velocity = new Vector2(rb.velocity.x, 0);
-    //        }
-
-    //        rb.gravityScale = 0;
-            
-    //    }
-    //    else
-    //    {
-    //        rb.gravityScale = initGravity;
-    //    }
-
-    //    if (ladderBelow)
-    //    {
-    //        if (Input.GetKey(KeyCode.S) && !onLadder)
-    //        {
-    //            platformCollider.enabled = false;
-    //            rb.velocity = new Vector2(rb.velocity.x, -climbSpeed);
-    //        }
-    //    }
-    //}
 
     public void JumpCall(CallbackContext ctx)
     {
