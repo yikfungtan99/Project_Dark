@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NetworkTestLevel.unity
     guid: fea1a487fcca6714cbe6a53680845977
+  - enabled: 1
+    path: Assets/Scenes/TestLevel_Trampoline.unity
+    guid: ac4e25169e06c2642b48605e5bc6360b
   m_configObjects: {}

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3631,7 +3631,7 @@ MonoBehaviour:
   - {fileID: 8988253221736984562, guid: 31e61f5d36ba0134b9c816a5effce450, type: 3}
   lrm: {fileID: 0}
   lobbyScene: Assets/Scenes/Lobby.unity
-  gameScene: Assets/Scenes/NetworkTestLevel.unity
+  gameScene: Assets/Scenes/TestLevel_Trampoline.unity
   playerList: {fileID: 1196662949}
   numOfActivePlayers: 0
 --- !u!4 &1292091254

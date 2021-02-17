@@ -98,6 +98,7 @@ MonoBehaviour:
   syncMode: 1
   syncInterval: 0.1
   moveSpeed: 15
+  forceDecay: 2
   faceLeft: 1
   playerSprite: {fileID: 583809002504579197}
   jumpForce: 23

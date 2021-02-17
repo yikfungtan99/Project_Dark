@@ -1,7 +1,9 @@
 ﻿using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 
 public class GameManager : NetworkBehaviour
@@ -12,6 +14,8 @@ public class GameManager : NetworkBehaviour
 
     private Transform[] spawnPoint = new Transform[4];
 
+    [SerializeField] private GameObject pauseMenu;
+
     private void Start()
     {
         nm = NetworkManagerCustom.Instance;
@@ -20,6 +24,19 @@ public class GameManager : NetworkBehaviour
         SetSpawnPoints();
 
         SpawnPlayers();
+    }
+
+    private void Update()
+    {
+        PauseMenuInput();
+    }
+
+    private void PauseMenuInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
+        {
+            pauseMenu.SetActive(!pauseMenu.activeSelf);
+        }
     }
 
     private void SetSpawnPoints()
@@ -36,12 +53,37 @@ public class GameManager : NetworkBehaviour
 
         for (int i = 0; i < nm.playerList.transform.childCount; i++)
         {
-            
-            if (i > 1) rot = 180;
+
+            if (i == 1 || i == 3) 
+            { 
+                rot = 180; 
+            } 
+            else
+            {
+                rot = 0;
+            }
 
             Vector3 pos = spawnPoint[i].position;
             PlayerLobby pn = nm.playerList.transform.GetChild(i).GetComponent<PlayerLobby>();
             pn.CmdSpawnPlayer(pn.gamepadNum, pos, rot);
+        }
+    }
+
+    public void Disconnect()
+    {
+        nm.numOfActivePlayers = 0;
+
+        if (nm.lrm.Available())
+        {
+            nm.StopServer();
+            nm.StopHost();
+            nm.StopClient();
+            nm.lrm.Shutdown();
+        }
+        else
+        {
+            nm.StopServer();
+            nm.StopHost();
         }
     }
 }
