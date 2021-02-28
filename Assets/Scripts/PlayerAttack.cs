@@ -23,6 +23,7 @@ public class PlayerAttack : NetworkBehaviour
 
     private void PlayerDetection()
     {
+        
         cirCol = Physics2D.OverlapCircleAll(attackCircle.position, attackRadius, attackLayer);
 
         if (cirCol.Length > 0)
@@ -38,32 +39,37 @@ public class PlayerAttack : NetworkBehaviour
             }
         }
 
-        //Remove when better attack effects are here
-        if (attackEffects.intensity > 0) attackEffects.intensity = Mathf.Lerp(attackEffects.intensity, 0, 10 * Time.deltaTime);
-        if (attackEffects.intensity < 0.01) attackEffects.intensity = 0;
+        AttackEffects();
     }
 
     private void Attack(PlayerStats target)
     {
         if (canAttack)
         {
-            target.ModifyHealth(-1);
+            if (!isClientOnly) target.ModifyHealth(-1);
             attackEffects.intensity = Random.Range(0.8f, 1.0f);
             StartCoroutine("AttackCooldown");
         }
     }
 
-    //private void CmdAttackEffects()
-    //{
-    //    RpcAttackEffects();
-    //}
+    private void AttackEffects()
+    {
+        //Remove when better attack effects are here
+        if (attackEffects.intensity > 0) attackEffects.intensity = Mathf.Lerp(attackEffects.intensity, 0, 10 * Time.deltaTime);
+        if (attackEffects.intensity < 0.01) attackEffects.intensity = 0;
+    }
 
-    //[ClientRpc]
-    //private void RpcAttackEffects()
-    //{
-    //    attackEffects.intensity = Random.Range(0.8f, 1.0f);
-    //    StartCoroutine("AttackCooldown");
-    //}
+    [Command(ignoreAuthority = true)]
+    private void CmdAttackEffects()
+    {
+        RpcAttackEffects();
+    }
+
+    [ClientRpc]
+    private void RpcAttackEffects()
+    {
+        AttackEffects();
+    }
 
     IEnumerator AttackCooldown()
     {

@@ -14,7 +14,7 @@ public class GlobalLight : MonoBehaviour
     void Start()
     {
         globalLite.intensity = intensityOnStart;
-        //StartCoroutine(lightDimmer());
+        StartCoroutine(lightDimmer());
     }
 
     IEnumerator lightDimmer()

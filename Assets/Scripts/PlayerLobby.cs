@@ -31,6 +31,8 @@ public class PlayerLobby : NetworkBehaviour
 
     public LobbyPlayer lobbyUI;
 
+    public PlayerStats playerStats;
+
     private void Start()
     {
         nm = NetworkManagerCustom.Instance;
@@ -69,10 +71,9 @@ public class PlayerLobby : NetworkBehaviour
     public void CmdSpawnPlayer(int pNum, int gNum, Vector3 vec, float rot)
     {
         GameObject player = Instantiate(nm.spawnPrefabs[0], vec, Quaternion.Euler(new Vector3(0, rot, 0)));
-        player.transform.SetParent(GameManager.Instance.transform);
         player.GetComponent<PlayerStats>().playerNum = pNum;
         player.GetComponent<PlayerInput>().controller = controller;
         player.GetComponent<PlayerInput>().gamepadNum = gNum;
         NetworkServer.Spawn(player, connectionToClient);
-    }    
+    }
 }

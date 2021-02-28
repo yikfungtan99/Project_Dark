@@ -9,37 +9,28 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Transform panels;
     [SerializeField] private TextMeshProUGUI txtWin;
 
-    private PlayerHUDPanel[] playerPanels;
-    private PlayerStats[] playerStats;
+    private List<PlayerHUDPanel> playerPanels = new List<PlayerHUDPanel>();
 
     private GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
+        SpawnPanels();
         gm = GameManager.Instance;
     }
 
     public void SpawnPanels()
     {
-        playerPanels = new PlayerHUDPanel[gm.transform.childCount];
-        playerStats = new PlayerStats[gm.transform.childCount];
-
-        for (int i = 0; i < gm.transform.childCount; i++)
+        for (int i = 0; i < NetworkManagerCustom.Instance.playerList.transform.childCount; i++)
         {
-            PlayerHUDPanel p = Instantiate(playerHudPanel, panels).GetComponent<PlayerHUDPanel>();
-            playerPanels[i] = p;
+            playerPanels.Add(Instantiate(playerHudPanel, panels).GetComponent<PlayerHUDPanel>());
         }
-
-        UpdatePlayerHUD();
     }
 
-    public void UpdatePlayerHUD()
+    public void UpdatePlayerHUD(PlayerStats stats)
     {
-        for (int i = 0; i < gm.transform.childCount; i++)
-        {
-            playerPanels[i].playerStats = gm.transform.GetChild(i).GetComponent<PlayerStats>();
-        }
+        playerPanels[stats.playerNum - 1].playerStats = stats;
     }
 
     public void AnnounceWinner(int num)

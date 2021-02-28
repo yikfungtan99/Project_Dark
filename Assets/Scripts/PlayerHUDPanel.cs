@@ -10,14 +10,13 @@ public class PlayerHUDPanel : MonoBehaviour
 
     public PlayerStats playerStats;
 
-    private void Start()
-    {
-        txtName.text = "Player " + (playerStats.playerNum);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        txtHealth.text = "Health:" + playerStats.health;
+        if (playerStats)
+        {
+            txtName.text = "Player " + (playerStats.playerNum);
+            txtHealth.text = "Health:" + playerStats.health;
+        }
     }
 }

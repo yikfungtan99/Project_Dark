@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : NetworkBehaviour
@@ -10,7 +11,9 @@ public class GameManager : NetworkBehaviour
 
     private NetworkManagerCustom nm;
 
-    [SerializeField] private HUDManager hud;
+    public HUDManager hud;
+
+    public List<GameObject> avatarList;
 
     [SerializeField] private Transform spawnPoints;
 
@@ -35,17 +38,22 @@ public class GameManager : NetworkBehaviour
     private void Start()
     {
         nm = NetworkManagerCustom.Instance;
+        avatarList = new List<GameObject>();
         if (isClientOnly) return;
 
         SetSpawnPoints();
 
         SpawnPlayers();
-        hud.SpawnPanels();
     }
 
     private void Update()
     {
         PauseMenuInput();
+    }
+
+    public void AddToAvatarList(GameObject avatar)
+    {
+        avatarList.Add(avatar);
     }
 
     private void PauseMenuInput()
@@ -66,6 +74,8 @@ public class GameManager : NetworkBehaviour
 
     private void SpawnPlayers()
     {
+        if (isClientOnly) return;
+        
         float rot = 0;
 
         for (int i = 0; i < nm.playerList.transform.childCount; i++)
@@ -86,12 +96,14 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public void CheckerPlayersRemaining()
+    public void CheckForPlayerRemaining()
     {
+        print("checcking player remaining");
         int aliveNum = 0;
-        foreach (var item in GetComponentsInChildren<PlayerStats>())
+        foreach (var item in avatarList)
         {
-            if (item.alive) aliveNum += 1;
+            PlayerStats s = item.GetComponent<PlayerStats>();
+            if (s.alive) aliveNum += 1;     
         }
 
         if(aliveNum <= 1)
@@ -112,9 +124,11 @@ public class GameManager : NetworkBehaviour
     private int GetWinner()
     {
         int winNum = -1;
-        foreach (var item in GetComponentsInChildren<PlayerStats>())
+
+        foreach (var item in avatarList)
         {
-            if (item.alive) winNum = item.playerNum;
+            PlayerStats s = item.GetComponent<PlayerStats>();
+            if (s.alive) winNum = s.playerNum;
         }
         return winNum;
     }
@@ -124,23 +138,38 @@ public class GameManager : NetworkBehaviour
         StartCoroutine(GameEndDelay());
     }
 
-    private void DestroyAllPlayers()
-    {
-        if (isClientOnly) return;
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            NetworkServer.Destroy(transform.GetChild(i).gameObject);
-        }
-    }
-
     private IEnumerator GameEndDelay()
     {
         hud.AnnounceWinner(GetWinner());
         yield return new WaitForSeconds(gameEndedDelayTime);
         DestroyAllPlayers();
-        yield return new WaitForSeconds(0.1f);
         SpawnPlayers();
-        hud.UpdatePlayerHUD();
+
+        //hud.UpdatePlayerHUD();
+    }
+
+    private void DestroyAllPlayers()
+    {
+        if (!isClientOnly)
+        {
+            for (int i = 0; i < avatarList.Count; i++)
+            {
+                NetworkServer.Destroy(avatarList[i].gameObject);
+            }
+
+            RpcResetAvatarList();
+        }
+    }
+
+    private void ResetAvatarList()
+    {
+        avatarList.Clear();
+    }
+
+    [ClientRpc]
+    private void RpcResetAvatarList()
+    {
+        ResetAvatarList();
     }
 
     public void Disconnect()
