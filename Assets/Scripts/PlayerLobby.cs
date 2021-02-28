@@ -66,11 +66,13 @@ public class PlayerLobby : NetworkBehaviour
 
 
     [Command(ignoreAuthority = true)]
-    public void CmdSpawnPlayer(int num, Vector3 vec, float rot)
+    public void CmdSpawnPlayer(int pNum, int gNum, Vector3 vec, float rot)
     {
         GameObject player = Instantiate(nm.spawnPrefabs[0], vec, Quaternion.Euler(new Vector3(0, rot, 0)));
+        player.transform.SetParent(GameManager.Instance.transform);
+        player.GetComponent<PlayerStats>().playerNum = pNum;
         player.GetComponent<PlayerInput>().controller = controller;
-        player.GetComponent<PlayerInput>().gamepadNum = num;
+        player.GetComponent<PlayerInput>().gamepadNum = gNum;
         NetworkServer.Spawn(player, connectionToClient);
     }    
 }

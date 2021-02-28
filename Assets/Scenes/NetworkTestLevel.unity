@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -473,6 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 5
   forceXamp: 3
+  forceYamp: 3
 --- !u!61 &336525391
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1571,8 +1572,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  hud: {fileID: 0}
   spawnPoints: {fileID: 419663800}
   pauseMenu: {fileID: 1211970872}
+  gameEndedDelayTime: 0
 --- !u!4 &573361437
 Transform:
   m_ObjectHideFlags: 0
@@ -3526,6 +3529,7 @@ GameObject:
   - component: {fileID: 1586690273}
   - component: {fileID: 1586690272}
   - component: {fileID: 1586690271}
+  - component: {fileID: 1586690275}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -3614,6 +3618,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1586690275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586690270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5f5d3fde3a5cd4b83ee6199a665d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHudPanel: {fileID: 4866790492123632179, guid: 5b255c936bce4b84fa2878d69ac05585,
+    type: 3}
+  panels: {fileID: 0}
 --- !u!1 &1607736124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3701,6 +3720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalLite: {fileID: 1607736125}
   intensityOnStart: 0.46
+  secondsToDark: 0
 --- !u!1 &1660588150
 GameObject:
   m_ObjectHideFlags: 0
@@ -15350,7 +15370,7 @@ GameObject:
   - component: {fileID: 2139635434}
   - component: {fileID: 2139635435}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Panels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,8 +16,8 @@ public class PlatformerMovement : NetworkBehaviour
     private Vector2 currentSpeed;
 
     //External Force
-    [SerializeField] private float forceDecay;
-    private Vector2 currentForce;
+    [SerializeField] private float externalForceXDecay;
+    private float currentForceX;
 
     //Direction Field
     public bool faceLeft;
@@ -116,7 +116,7 @@ public class PlatformerMovement : NetworkBehaviour
 
     private void CalculateVelocity()
     {
-        rb.velocity = currentSpeed + currentForce;
+        rb.velocity = currentSpeed + new Vector2(currentForceX, 0);
     }
 
     private void FlipDirection()
@@ -185,17 +185,16 @@ public class PlatformerMovement : NetworkBehaviour
         }   
     }
 
-    public void AddExternalForce(Vector2 force)
+    public void AddExternalForceX(float force)
     {
-        currentForce = force;
+        currentForceX = force;
     }
 
     private void ForceDecay()
     {
-        currentForce.x = Mathf.Lerp(currentForce.x, 0, forceDecay * Time.fixedDeltaTime);
-        currentForce.y = Mathf.Lerp(currentForce.y, 0, rb.gravityScale * Time.fixedDeltaTime);
+        currentForceX = Mathf.Lerp(currentForceX, 0, (-input.movementInput.x + externalForceXDecay) * Time.deltaTime);
 
-        if (Mathf.Abs(currentForce.x) < 0.1) currentForce.x = 0;
+        if (Mathf.Abs(currentForceX) < 0.1) currentForceX = 0;
     }
 
     private void OnDrawGizmosSelected()

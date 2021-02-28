@@ -13,8 +13,8 @@ public class GlobalLight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //globalLite.intensity = intensityOnStart;
-        StartCoroutine(lightDimmer());
+        globalLite.intensity = intensityOnStart;
+        //StartCoroutine(lightDimmer());
     }
 
     IEnumerator lightDimmer()

@@ -7,12 +7,14 @@ public class Trampoline : MonoBehaviour
 
     [SerializeField] private float force;
     [SerializeField] private float forceXamp = 3.0f;
+    [SerializeField] private float forceYamp = 3.0f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {   
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlatformerMovement>().AddExternalForce(CalculateForceAngle());
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(CalculateForceAngle());
+            collision.gameObject.GetComponent<PlatformerMovement>().AddExternalForceX(CalculateForceAngle().x);
         }
     }
 
@@ -20,6 +22,7 @@ public class Trampoline : MonoBehaviour
     {
         Vector2 currentForce = transform.right * force;
         currentForce.x = currentForce.x * forceXamp;
+        currentForce.y = currentForce.y * forceYamp;
         return currentForce;
     }
 }
