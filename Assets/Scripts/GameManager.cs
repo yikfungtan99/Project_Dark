@@ -21,7 +21,9 @@ public class GameManager : NetworkBehaviour
 
     [SerializeField] private GameObject pauseMenu;
 
-    [SerializeField] private float gameEndedDelayTime;
+    public float gameEndedDelayTime;
+
+    [SyncVar] public int round = 1;
 
     public void Awake()
     {
@@ -135,6 +137,7 @@ public class GameManager : NetworkBehaviour
 
     private void RestartGame()
     {
+        if (isServer) round += 1;
         StartCoroutine(GameEndDelay());
     }
 

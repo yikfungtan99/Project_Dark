@@ -6,6 +6,9 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerAttack : NetworkBehaviour
 {
+
+    private PlayerStats stats;
+
     [SerializeField] private Transform attackCircle;
     [SerializeField] private float attackRate;
     private bool canAttack = true;
@@ -15,6 +18,11 @@ public class PlayerAttack : NetworkBehaviour
     [SerializeField] private LayerMask attackLayer;
 
     [SerializeField] private Light2D attackEffects;
+
+    private void Start()
+    {
+        stats = GetComponent<PlayerStats>();
+    }
 
     private void Update()
     {
@@ -44,7 +52,7 @@ public class PlayerAttack : NetworkBehaviour
 
     private void Attack(PlayerStats target)
     {
-        if (canAttack)
+        if (canAttack && !stats.grace)
         {
             if (!isClientOnly) target.ModifyHealth(-1);
             attackEffects.intensity = Random.Range(0.8f, 1.0f);

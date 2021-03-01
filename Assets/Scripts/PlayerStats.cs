@@ -9,7 +9,11 @@ public class PlayerStats : NetworkBehaviour
     [SyncVar(hook = "DamageEffects")] public int health = 10;
 
     [SyncVar] public int playerNum = 0;
+
+    [SerializeField] private float gracePeriod = 0.5f;
+
     public bool alive = true;
+    public bool grace = false;
 
     private HUDManager hud;
 
@@ -37,15 +41,28 @@ public class PlayerStats : NetworkBehaviour
 
         if(oldValue > newValue)
         {
+
+            if(!grace) StartCoroutine(Grace());
+
             if(newValue <= 0)
             {
-                CmdDeath();
+                //CmdDeath();
+                Death();
             }
         }
         else
         {
 
         }
+    }
+
+    IEnumerator Grace()
+    {
+        print("GRACE STARTED");
+        grace = true;
+        yield return new WaitForSeconds(gracePeriod);
+        print("GRACE ENDED");
+        grace = false;
     }
 
     private void Death()

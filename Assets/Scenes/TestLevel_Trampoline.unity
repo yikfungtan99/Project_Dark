@@ -1429,9 +1429,11 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hud: {fileID: 1586690275}
+  avatarList: []
   spawnPoints: {fileID: 419663800}
   pauseMenu: {fileID: 1211970872}
   gameEndedDelayTime: 3
+  round: 1
 --- !u!4 &573361437
 Transform:
   m_ObjectHideFlags: 0
