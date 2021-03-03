@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] GameObject gamePanel;
     [SerializeField] GameObject mainMenuPanel;
+    [SerializeField] GameObject helpPanel;
     [SerializeField] GameObject connectingPanel;
     [SerializeField] GameObject serverIsOfflinePanel;
     [SerializeField] GameObject lobbyPanel;
@@ -45,6 +46,7 @@ public class MainMenu : MonoBehaviour
         connectingPanel.SetActive(false);
         serverIsOfflinePanel.SetActive(false);
         lobbyPanel.SetActive(false);
+        helpPanel.SetActive(false);
     }
 
     public void LoadMainMenuPanel()
@@ -55,11 +57,13 @@ public class MainMenu : MonoBehaviour
         connectingPanel.SetActive(false);
         serverIsOfflinePanel.SetActive(false);
         lobbyPanel.SetActive(false);
+        helpPanel.SetActive(false);
     }
 
-    public void LoadOptionsPanel()
+    public void LoadHelpPanel()
     {
-
+        mainMenuPanel.SetActive(false);
+        helpPanel.SetActive(true);
     }
 
     public void OfflineLobby()

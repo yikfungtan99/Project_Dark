@@ -49,11 +49,9 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator HideWinText()
     {
-        
-        yield return new WaitForSeconds(gm.gameEndedDelayTime/2);
-        print("Hi");
-        txtWin.text = "ROUND " + gm.round + "!";
-        yield return new WaitForSeconds(gm.gameEndedDelayTime /2);
+        yield return new WaitForSeconds(GameManager.Instance.gameEndedDelayTime/2);
+        txtWin.text = "ROUND " + GameManager.Instance.round + "!";
+        yield return new WaitForSeconds(GameManager.Instance.gameEndedDelayTime /2);
         txtWin.gameObject.SetActive(false);
     }
 }
