@@ -15,6 +15,8 @@ public class PlayerStats : NetworkBehaviour
     public bool alive = true;
     public bool grace = false;
 
+    [SerializeField] private ParticleSystem healEffect;
+
     private HUDManager hud;
 
     public void Start()
@@ -52,7 +54,7 @@ public class PlayerStats : NetworkBehaviour
         }
         else
         {
-
+            healEffect.Play();
         }
     }
 

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134c94808e5cd0f4cac04038061fef69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 3
+  timer: 6
   lightBulb: {fileID: 6761634857796813131}
 --- !u!1 &6761634857796813125
 GameObject:
