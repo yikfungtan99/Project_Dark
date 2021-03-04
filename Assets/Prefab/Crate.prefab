@@ -114,6 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  healEffect: {fileID: 8823962463711697148, guid: 388590e7b05528f43aeb92744f74db7e,
+    type: 3}
 --- !u!61 &6596469708899787068
 BoxCollider2D:
   m_ObjectHideFlags: 0

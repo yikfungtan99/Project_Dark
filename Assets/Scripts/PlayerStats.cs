@@ -15,8 +15,6 @@ public class PlayerStats : NetworkBehaviour
     public bool alive = true;
     public bool grace = false;
 
-    [SerializeField] private ParticleSystem healEffect;
-
     private HUDManager hud;
 
     public void Start()
@@ -39,11 +37,16 @@ public class PlayerStats : NetworkBehaviour
 
     private void DamageEffects(int oldValue, int newValue)
     {
-        //TAKE DAMAGE
+        
 
-        if(oldValue > newValue)
+        if (newValue > oldValue)
         {
+            print("heal");
+        }
 
+        //TAKE DAMAGE
+        if (oldValue > newValue)
+        {
             if(!grace) StartCoroutine(Grace());
 
             if(newValue <= 0)
@@ -51,10 +54,6 @@ public class PlayerStats : NetworkBehaviour
                 //CmdDeath();
                 Death();
             }
-        }
-        else
-        {
-            healEffect.Play();
         }
     }
 

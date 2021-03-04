@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Crate : NetworkBehaviour
 {
+    [SerializeField] private GameObject healEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,8 @@ public class Crate : NetworkBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerHit")) return;
         if (collision.gameObject.transform.parent.CompareTag("Player"))
         {
+            GameObject effect = GameObject.Instantiate(healEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 1);
             NetworkServer.Destroy(gameObject);
             collision.transform.parent.gameObject.GetComponent<PlayerStats>().ModifyHealth(3);
         }
