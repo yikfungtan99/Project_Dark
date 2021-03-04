@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testrb : MonoBehaviour
+public class testrb : MonoBehaviour, ISelectable
 {
-    private Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+    public void Trigger()
     {
-        rb = GetComponent<Rigidbody2D>();
+        print("HELLO I AM" + gameObject.name);
     }
 }
