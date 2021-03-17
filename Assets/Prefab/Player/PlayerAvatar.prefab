@@ -243,11 +243,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.02
-  health: 10
+  maxHealth: 5
+  health: 5
   playerNum: 0
   gracePeriod: 0.5
+  sprite: {fileID: 583809002504579197}
+  torch: {fileID: 583809002242277846}
   alive: 1
   grace: 0
+  reveal: 0
 --- !u!114 &1884363576301388994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +317,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.003075689, y: -0.09391745}
+  m_Offset: {x: 0.012234598, y: -0.037765205}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -324,7 +328,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54553336, y: 0.5624735}
+  m_Size: {x: 0.7598725, y: 0.97085345}
   m_EdgeRadius: 0
 --- !u!1 &583809002242277843
 GameObject:
@@ -338,6 +342,7 @@ GameObject:
   - component: {fileID: 583809002242277845}
   - component: {fileID: 583809002242277846}
   - component: {fileID: 583809002242277847}
+  - component: {fileID: 2242797324025922090}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Untagged
@@ -420,6 +425,9 @@ MonoBehaviour:
   torchBlockLayer:
     serializedVersion: 2
     m_Bits: 256
+  torchPlayerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   torchOn: 0
   battery: {fileID: 0}
   outOfBattery: 0
@@ -442,6 +450,26 @@ MonoBehaviour:
   maxTorchBattery: 100
   currentPercentage: 0
   drainRate: 10
+--- !u!114 &2242797324025922090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583809002242277843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6070a954c8b434991291becd8a667e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  torch: {fileID: 583809002242277845}
+  torchPlayerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  useRaycast: 0
+  useCollider: 0
+  circleOffset: {x: 0, y: 0}
+  circleRadius: 0
 --- !u!1 &583809002421635091
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &583809002421635092
 Transform:
   m_ObjectHideFlags: 0
@@ -509,6 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 583809002504579198}
   - component: {fileID: 583809002504579197}
+  - component: {fileID: 1635713331623317660}
   m_Layer: 0
   m_Name: s_player
   m_TagString: Untagged
@@ -569,10 +598,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 4571226829092849726, guid: 43445b95342abc0409dd68c3a63674a0,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb7ea956faf68f0428e26902a5c43aa5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.5625, y: 0.53125}
@@ -581,6 +609,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1635713331623317660
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583809002504579196}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7d5de1de4e5a16a479eedcd87058ffa8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &583809002545285065
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +672,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019698977, y: -0.027286611}
+  m_Offset: {x: 0.0122346, y: -0.0377652}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -636,7 +683,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3623078, y: 0.3098969}
+  m_Size: {x: 0.7598725, y: 0.9708534}
   m_EdgeRadius: 0
 --- !u!1 &583809003151086915
 GameObject:
@@ -806,7 +853,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9155495146531386536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.698, y: 0, z: 0}
+  m_LocalPosition: {x: 0.673, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8342502799575788810}

@@ -96,6 +96,15 @@ public class PlayerInput : NetworkBehaviour
     {
         if (!hasAuthority) return;
         ReadInput();
+        if (movementInput.x != 0) { 
+            
+            GetComponentInChildren<Animator>().SetBool("isMoving", true); 
+
+        } 
+        else
+        {
+            GetComponentInChildren<Animator>().SetBool("isMoving", false);
+        }
     }
 
     private void ReadInput()

@@ -6,14 +6,18 @@ using UnityEngine;
 
 public class PlayerStats : NetworkBehaviour
 {
-    [SyncVar(hook = "DamageEffects")] public int health = 10;
+    public int maxHealth;
+    [SyncVar(hook = "DamageEffects")] public int health;
 
     [SyncVar] public int playerNum = 0;
 
     [SerializeField] private float gracePeriod = 0.5f;
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private CustomTorch torch;
 
     public bool alive = true;
     public bool grace = false;
+    public bool reveal = false;
 
     private HUDManager hud;
 
@@ -21,6 +25,37 @@ public class PlayerStats : NetworkBehaviour
     {
         StartCoroutine(AddToAvatarList());
         hud = GameManager.Instance.hud;
+
+        if (health != maxHealth) health = maxHealth;
+    }
+
+    private void Update()
+    {
+        if (torch.torchOn) 
+        { 
+            reveal = true;
+        }
+        else
+        {
+            reveal = false;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (GlobalLight.Instance.globalLite.intensity > GlobalLight.Instance.targetDarkness)
+        {
+            if (GlobalLight.Instance.globalLite.intensity > 0.05) sprite.color = new Color(sprite.color.r, sprite.color.b, sprite.color.b, GlobalLight.Instance.globalLite.intensity * 1.5f);
+            if (reveal)
+            {
+                sprite.color = new Color(sprite.color.r, sprite.color.b, sprite.color.b, 255);
+            }
+        }
+        else
+        {
+            sprite.enabled = reveal;
+            sprite.color = new Color(sprite.color.r, sprite.color.b, sprite.color.b, 255);
+        }
     }
 
     IEnumerator AddToAvatarList()
@@ -33,12 +68,17 @@ public class PlayerStats : NetworkBehaviour
     public void ModifyHealth(int amount)
     {
         health += amount;
+
+        if(health > 0)
+        {
+            health = maxHealth;
+        }
+
+        if (health < 0) health = 0;
     }
 
     private void DamageEffects(int oldValue, int newValue)
     {
-        
-
         if (newValue > oldValue)
         {
             print("heal");
@@ -59,10 +99,8 @@ public class PlayerStats : NetworkBehaviour
 
     IEnumerator Grace()
     {
-        print("GRACE STARTED");
         grace = true;
         yield return new WaitForSeconds(gracePeriod);
-        print("GRACE ENDED");
         grace = false;
     }
 
