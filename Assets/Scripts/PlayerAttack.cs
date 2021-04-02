@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerAttack : NetworkBehaviour
 {
@@ -24,47 +25,59 @@ public class PlayerAttack : NetworkBehaviour
         stats = GetComponent<PlayerStats>();
     }
 
-    private void Update()
+    public void AttackCall(CallbackContext ctx)
     {
-        PlayerDetection();
+        if (!hasAuthority) return;
+        Attack();
     }
 
-    private void PlayerDetection()
+    //private void PlayerDetection()
+    //{
+    //    cirCol = Physics2D.OverlapCircleAll(attackCircle.position, attackRadius, attackLayer);
+
+    //    if (cirCol.Length > 0)
+    //    {
+    //        for (int i = 0; i < cirCol.Length; i++)
+    //        {
+    //            if (cirCol[i].transform.parent.gameObject != gameObject)
+    //            {
+    //                //Another Player within range
+    //                PlayerStats ph = cirCol[i].gameObject.GetComponentInParent<PlayerStats>();
+    //                Attack(ph);
+    //            }
+    //        }
+    //    }
+    //}
+
+    private void Attack()
     {
-        
-        cirCol = Physics2D.OverlapCircleAll(attackCircle.position, attackRadius, attackLayer);
+        PlayerStats target = null;
 
-        if (cirCol.Length > 0)
-        {
-            for (int i = 0; i < cirCol.Length; i++)
-            {
-                if (cirCol[i].transform.parent.gameObject != gameObject)
-                {
-                    //Another Player within range
-                    PlayerStats ph = cirCol[i].gameObject.GetComponentInParent<PlayerStats>();
-                    Attack(ph);
-                }
-            }
-        }
-
-        AttackEffects();
-    }
-
-    private void Attack(PlayerStats target)
-    {
         if (canAttack && !stats.grace)
         {
-            if (!isClientOnly) target.ModifyHealth(-1);
-            attackEffects.intensity = Random.Range(0.8f, 1.0f);
-            StartCoroutine("AttackCooldown");
-        }
-    }
+            cirCol = Physics2D.OverlapCircleAll(attackCircle.position, attackRadius, attackLayer);
 
-    private void AttackEffects()
-    {
-        //Remove when better attack effects are here
-        if (attackEffects.intensity > 0) attackEffects.intensity = Mathf.Lerp(attackEffects.intensity, 0, 10 * Time.deltaTime);
-        if (attackEffects.intensity < 0.01) attackEffects.intensity = 0;
+            if (cirCol.Length > 0)
+            {
+                for (int i = 0; i < cirCol.Length; i++)
+                {
+                    if (cirCol[i].transform.parent.gameObject != gameObject)
+                    {
+                        //Another Player within range
+                        target = cirCol[i].gameObject.GetComponentInParent<PlayerStats>();
+                    }
+                }
+            }
+
+            if (target)
+            {
+                target.ModifyHealth(-1);
+            }
+
+            attackEffects.intensity = Random.Range(0.5f, 1.0f);
+            StartCoroutine("AttackCooldown");
+            CmdAttackEffects();
+        }
     }
 
     [Command(ignoreAuthority = true)]
@@ -76,7 +89,7 @@ public class PlayerAttack : NetworkBehaviour
     [ClientRpc]
     private void RpcAttackEffects()
     {
-        AttackEffects();
+        attackEffects.gameObject.SetActive(true);
     }
 
     IEnumerator AttackCooldown()
@@ -88,6 +101,7 @@ public class PlayerAttack : NetworkBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackCircle.position, attackRadius);
     }
 }

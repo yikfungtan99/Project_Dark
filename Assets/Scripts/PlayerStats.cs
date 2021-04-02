@@ -18,7 +18,7 @@ public class PlayerStats : NetworkBehaviour
     public bool alive = true;
     public bool grace = false;
     public bool reveal = false;
-
+     
     private HUDManager hud;
 
     public void Start()
@@ -30,18 +30,6 @@ public class PlayerStats : NetworkBehaviour
     }
 
     private void Update()
-    {
-        if (torch.torchOn) 
-        { 
-            reveal = true;
-        }
-        else
-        {
-            reveal = false;
-        }
-    }
-
-    private void LateUpdate()
     {
         if (GlobalLight.Instance.globalLite.intensity > GlobalLight.Instance.targetDarkness)
         {
@@ -56,6 +44,8 @@ public class PlayerStats : NetworkBehaviour
             sprite.enabled = reveal;
             sprite.color = new Color(sprite.color.r, sprite.color.b, sprite.color.b, 255);
         }
+
+        reveal = false;
     }
 
     IEnumerator AddToAvatarList()
@@ -67,9 +57,15 @@ public class PlayerStats : NetworkBehaviour
 
     public void ModifyHealth(int amount)
     {
+        CmdModifyHealth(amount);
+    }
+
+    [Command(ignoreAuthority = true)]
+    public void CmdModifyHealth(int amount)
+    {
         health += amount;
 
-        if(health > 0)
+        if (health > maxHealth)
         {
             health = maxHealth;
         }

@@ -41,13 +41,21 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""35651868-1773-49b9-81f5-cd049b41eff1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""81cefb5a-6dbb-4fa5-9241-7dcdfc91891e"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""id"": ""79e70d8b-54d2-4fba-88e7-8ddff87d9d3f"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -57,8 +65,8 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""79e70d8b-54d2-4fba-88e7-8ddff87d9d3f"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""81cefb5a-6dbb-4fa5-9241-7dcdfc91891e"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -234,7 +242,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7ddad36d-32e7-44b2-90fb-1fdf0b947b03"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -250,6 +258,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Torch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b128a7c3-50bb-44eb-a524-8c5b8ab9f8bf"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adc2aa1b-0141-4d96-b8ea-021a7a50479f"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -279,6 +309,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Torch"",
                     ""type"": ""Button"",
                     ""id"": ""9ae055b4-0750-4ac4-b5e3-cfd80a434c50"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1f9ad06-1a6b-4412-8a84-fc36bb03305b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -343,7 +381,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""27d28755-07e4-4654-87a2-64077ac46fb9"",
-                    ""path"": ""<Keyboard>/slash"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -359,6 +397,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""818ebb62-d1b1-4e76-9682-3bf85b35be7c"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -395,11 +444,13 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player1_Movement = m_Player1.FindAction("Movement", throwIfNotFound: true);
         m_Player1_Jump = m_Player1.FindAction("Jump", throwIfNotFound: true);
         m_Player1_Torch = m_Player1.FindAction("Torch", throwIfNotFound: true);
+        m_Player1_Attack = m_Player1.FindAction("Attack", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Movement = m_Player2.FindAction("Movement", throwIfNotFound: true);
         m_Player2_Jump = m_Player2.FindAction("Jump", throwIfNotFound: true);
         m_Player2_Torch = m_Player2.FindAction("Torch", throwIfNotFound: true);
+        m_Player2_Attack = m_Player2.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -452,6 +503,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player1_Movement;
     private readonly InputAction m_Player1_Jump;
     private readonly InputAction m_Player1_Torch;
+    private readonly InputAction m_Player1_Attack;
     public struct Player1Actions
     {
         private @Controls m_Wrapper;
@@ -459,6 +511,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player1_Movement;
         public InputAction @Jump => m_Wrapper.m_Player1_Jump;
         public InputAction @Torch => m_Wrapper.m_Player1_Torch;
+        public InputAction @Attack => m_Wrapper.m_Player1_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -477,6 +530,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Torch.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnTorch;
                 @Torch.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnTorch;
                 @Torch.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnTorch;
+                @Attack.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_Player1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -490,6 +546,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Torch.started += instance.OnTorch;
                 @Torch.performed += instance.OnTorch;
                 @Torch.canceled += instance.OnTorch;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -501,6 +560,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player2_Movement;
     private readonly InputAction m_Player2_Jump;
     private readonly InputAction m_Player2_Torch;
+    private readonly InputAction m_Player2_Attack;
     public struct Player2Actions
     {
         private @Controls m_Wrapper;
@@ -508,6 +568,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player2_Movement;
         public InputAction @Jump => m_Wrapper.m_Player2_Jump;
         public InputAction @Torch => m_Wrapper.m_Player2_Torch;
+        public InputAction @Attack => m_Wrapper.m_Player2_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player2; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -526,6 +587,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Torch.started -= m_Wrapper.m_Player2ActionsCallbackInterface.OnTorch;
                 @Torch.performed -= m_Wrapper.m_Player2ActionsCallbackInterface.OnTorch;
                 @Torch.canceled -= m_Wrapper.m_Player2ActionsCallbackInterface.OnTorch;
+                @Attack.started -= m_Wrapper.m_Player2ActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_Player2ActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_Player2ActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_Player2ActionsCallbackInterface = instance;
             if (instance != null)
@@ -539,6 +603,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Torch.started += instance.OnTorch;
                 @Torch.performed += instance.OnTorch;
                 @Torch.canceled += instance.OnTorch;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -566,11 +633,13 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTorch(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTorch(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

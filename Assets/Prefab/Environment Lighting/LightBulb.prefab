@@ -132,12 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6070a954c8b434991291becd8a667e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torch: {fileID: 6761634858799362136}
+  source: {fileID: 6761634858799362136}
   torchPlayerLayer:
     serializedVersion: 2
     m_Bits: 8192
-  useRaycast: 0
-  useCollider: 1
   circleOffset: {x: 0, y: -3.16}
   circleRadius: 2.43
 --- !u!1 &6761634858799362138

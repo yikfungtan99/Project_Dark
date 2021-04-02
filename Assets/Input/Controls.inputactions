@@ -28,13 +28,21 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "35651868-1773-49b9-81f5-cd049b41eff1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "81cefb5a-6dbb-4fa5-9241-7dcdfc91891e",
-                    "path": "<Gamepad>/buttonSouth",
+                    "id": "79e70d8b-54d2-4fba-88e7-8ddff87d9d3f",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -44,8 +52,8 @@
                 },
                 {
                     "name": "",
-                    "id": "79e70d8b-54d2-4fba-88e7-8ddff87d9d3f",
-                    "path": "<Keyboard>/w",
+                    "id": "81cefb5a-6dbb-4fa5-9241-7dcdfc91891e",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -221,7 +229,7 @@
                 {
                     "name": "",
                     "id": "7ddad36d-32e7-44b2-90fb-1fdf0b947b03",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -237,6 +245,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Torch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b128a7c3-50bb-44eb-a524-8c5b8ab9f8bf",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "adc2aa1b-0141-4d96-b8ea-021a7a50479f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -266,6 +296,14 @@
                     "name": "Torch",
                     "type": "Button",
                     "id": "9ae055b4-0750-4ac4-b5e3-cfd80a434c50",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "c1f9ad06-1a6b-4412-8a84-fc36bb03305b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -330,7 +368,7 @@
                 {
                     "name": "",
                     "id": "27d28755-07e4-4654-87a2-64077ac46fb9",
-                    "path": "<Keyboard>/slash",
+                    "path": "<Keyboard>/rightCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -346,6 +384,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "818ebb62-d1b1-4e76-9682-3bf85b35be7c",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

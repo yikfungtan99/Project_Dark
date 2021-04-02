@@ -153,15 +153,38 @@ public class LobbyManager : NetworkBehaviour
     {
         NetworkServer.Destroy(p);
         nm.numOfActivePlayers -= 1;
+        RpcUpdatePlayerNum();
+    }
+
+    [ClientRpc]
+    private void RpcUpdatePlayerNum()
+    {
+        StartCoroutine("WaitToUpdatePlayersNumber");
     }
     
     public LobbyPlayer AddLobbyPlayer(string name, ControllerType type)
     {
-        LobbyPlayer lp = Instantiate(lobbyPlayer,lobbyPlayerShelf).GetComponent<LobbyPlayer>();
+        LobbyPlayer lp = Instantiate(lobbyPlayer, lobbyPlayerShelf).GetComponent<LobbyPlayer>();
         lp.controllerType = type;
         lp.Setup(name);
 
+        UpdatePlayersNumber();
+
         return lp;
+    }
+
+    public void UpdatePlayersNumber()
+    {
+        for (int i = 0; i < lobbyPlayerShelf.transform.childCount; i++)
+        {
+            lobbyPlayerShelf.transform.GetChild(i).GetComponent<LobbyPlayer>().UpdatePlayerNum(i);
+        }
+    }
+
+    IEnumerator WaitToUpdatePlayersNumber()
+    {
+        yield return new WaitForSeconds(0.02f);
+        UpdatePlayersNumber();
     }
 
     public void UpdateServerId(int oldId, int newId)
