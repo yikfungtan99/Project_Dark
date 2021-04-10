@@ -18,11 +18,15 @@ public class PlayerAttack : NetworkBehaviour
     private Collider2D[] cirCol;
     [SerializeField] private LayerMask attackLayer;
 
-    [SerializeField] private Light2D attackEffects;
+    [SerializeField] private Animator attackEffect;
+    [SerializeField] private SpriteRenderer attackEffectSprite;
+
+    [SerializeField] private Color[] attackColor;
 
     private void Start()
     {
         stats = GetComponent<PlayerStats>();
+        AssignAttackColor();
     }
 
     public void AttackCall(CallbackContext ctx)
@@ -49,6 +53,11 @@ public class PlayerAttack : NetworkBehaviour
     //    }
     //}
 
+    private void AssignAttackColor()
+    {
+        attackEffectSprite.color = attackColor[GetComponentInParent<PlayerStats>().playerNum - 1];
+    }
+
     private void Attack()
     {
         PlayerStats target = null;
@@ -74,7 +83,7 @@ public class PlayerAttack : NetworkBehaviour
                 target.ModifyHealth(-1);
             }
 
-            attackEffects.intensity = Random.Range(0.5f, 1.0f);
+            //attackEffects.intensity = Random.Range(0.5f, 1.0f);
             StartCoroutine("AttackCooldown");
             CmdAttackEffects();
         }
@@ -89,7 +98,7 @@ public class PlayerAttack : NetworkBehaviour
     [ClientRpc]
     private void RpcAttackEffects()
     {
-        attackEffects.gameObject.SetActive(true);
+        attackEffect.Play("Attack", -1, 0);
     }
 
     IEnumerator AttackCooldown()

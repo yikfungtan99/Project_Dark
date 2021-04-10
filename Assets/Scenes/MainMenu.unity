@@ -3958,7 +3958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientToServerTransport: {fileID: 1292091255}
-  serverIP: 175.143.135.43
+  serverIP: 60.49.205.204
   heartBeatInterval: 3
   connectOnAwake: 0
   authenticationKey: Secret Auth Key
