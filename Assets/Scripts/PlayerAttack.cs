@@ -99,6 +99,7 @@ public class PlayerAttack : NetworkBehaviour
     private void RpcAttackEffects()
     {
         attackEffect.Play("Attack", -1, 0);
+        if (AudioManager.Instance != null) AudioManager.Instance.Play("Attack");
     }
 
     IEnumerator AttackCooldown()

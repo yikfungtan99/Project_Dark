@@ -56,6 +56,8 @@ public class PlatformerMovement : NetworkBehaviour
     [SerializeField] private Collider2D platformCollider;
     [SerializeField] private Collider2D hitCollider;
 
+    [SerializeField] private AudioSource footsteps;
+
     //private void Awake()
     //{
     //    controls = new Controls();
@@ -94,6 +96,7 @@ public class PlatformerMovement : NetworkBehaviour
         Movement();
         ForceDecay();
         CalculateVelocity();
+        FootStepsEffect();  
     }
 
     private void OneWayPlatformInput()
@@ -112,6 +115,45 @@ public class PlatformerMovement : NetworkBehaviour
     private void Movement()
     {
         currentSpeed = new Vector2(input.movementInput.x * moveSpeed, rb.velocity.y);
+    }
+
+    private void FootStepsEffect()
+    {
+        if (input.movementInput.x == 0)
+        {
+            if (footsteps.isPlaying) CmdFootstepStop();
+        }
+        else
+        {
+            if (!footsteps.isPlaying)
+            {
+                CmdFootstepPlay();
+            }
+        }
+    }
+
+    [Command]
+    private void CmdFootstepPlay()
+    {
+        RpcFootstepPlay();
+    }
+
+    [ClientRpc]
+    private void RpcFootstepPlay()
+    {
+        footsteps.Play();
+    }
+
+    [Command]
+    private void CmdFootstepStop()
+    {
+        RpcFootstepStop();
+    }
+
+    [ClientRpc]
+    private void RpcFootstepStop()
+    {
+        footsteps.Stop();
     }
 
     private void CalculateVelocity()
@@ -145,6 +187,19 @@ public class PlatformerMovement : NetworkBehaviour
         if (!isGrounded) return;
         float yVelo = jumpForce;
         rb.velocity = new Vector2(rb.velocity.x, yVelo);
+        CmdJumpEffects();
+    }
+
+    [Command(ignoreAuthority = true)]
+    public void CmdJumpEffects()
+    {
+        RpcJumpEffects();
+    }
+
+    [ClientRpc]
+    public void RpcJumpEffects()
+    {
+        AudioManager.Instance.Play("Jump");
     }
 
     private void PlatformCheck()

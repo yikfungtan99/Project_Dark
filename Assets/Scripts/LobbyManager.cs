@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +30,9 @@ public class LobbyManager : NetworkBehaviour
 
     [SerializeField] private TextMeshProUGUI txtLobbyId;
     [SerializeField] private Button btnStart;
+
+    public UnityEvent audioJoin;
+    public UnityEvent audioDisconnect;
 
     public void Awake()
     {
@@ -146,6 +150,8 @@ public class LobbyManager : NetworkBehaviour
                 CmdDestroyPlayer(pl.gameObject);
             }
         }
+
+        audioDisconnect.Invoke();
     }
 
     [Command(ignoreAuthority = true)]
@@ -169,6 +175,8 @@ public class LobbyManager : NetworkBehaviour
         lp.Setup(name);
 
         UpdatePlayersNumber();
+
+        audioJoin.Invoke();
 
         return lp;
     }
@@ -213,7 +221,6 @@ public class LobbyManager : NetworkBehaviour
 
         if (nm.lrm.Available()) 
         {
-
             nm.StopServer();
             nm.StopHost();
             nm.StopClient();

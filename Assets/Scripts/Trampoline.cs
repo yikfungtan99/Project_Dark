@@ -15,6 +15,7 @@ public class Trampoline : MonoBehaviour
         {
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(CalculateForceAngle());
             collision.gameObject.GetComponent<PlatformerMovement>().AddExternalForceX(CalculateForceAngle().x);
+            AudioManager.Instance.Play("Trampoline");
         }
     }
 
