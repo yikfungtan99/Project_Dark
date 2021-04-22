@@ -23,6 +23,8 @@ public class PlayerAttack : NetworkBehaviour
 
     [SerializeField] private Color[] attackColor;
 
+    [SerializeField] private PlayerWeaponHolder playerWeapon;
+
     private void Start()
     {
         stats = GetComponent<PlayerStats>();
@@ -62,6 +64,8 @@ public class PlayerAttack : NetworkBehaviour
     {
         PlayerStats target = null;
 
+        if (playerWeapon.holdingWeapon == null) return;
+
         if (canAttack && !stats.grace)
         {
             cirCol = Physics2D.OverlapCircleAll(attackCircle.position, attackRadius, attackLayer);
@@ -86,6 +90,8 @@ public class PlayerAttack : NetworkBehaviour
             //attackEffects.intensity = Random.Range(0.5f, 1.0f);
             StartCoroutine("AttackCooldown");
             CmdAttackEffects();
+
+            playerWeapon.holdingWeapon.ConsumeCharges();
         }
     }
 

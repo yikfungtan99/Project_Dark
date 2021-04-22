@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &16214587180016942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1138383294492805081}
+  m_Layer: 0
+  m_Name: PlayerWeaponHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1138383294492805081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16214587180016942}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.18093358, y: 0.19743033, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_Children: []
+  m_Father: {fileID: 583809001150326005}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &583809001150326004
 GameObject:
   m_ObjectHideFlags: 0
@@ -20,6 +50,7 @@ GameObject:
   - component: {fileID: 4518130023235174762}
   - component: {fileID: 7398096088754531920}
   - component: {fileID: 1884363576301388994}
+  - component: {fileID: 8207807460963443992}
   m_Layer: 9
   m_Name: PlayerAvatar
   m_TagString: Player
@@ -47,6 +78,7 @@ Transform:
   - {fileID: 3694200128694658551}
   - {fileID: 5602650686204218051}
   - {fileID: 5636879790486004132}
+  - {fileID: 1138383294492805081}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -283,6 +315,24 @@ MonoBehaviour:
   - {r: 0.9803922, g: 0.24705884, b: 0.24705884, a: 1}
   - {r: 0.29411766, g: 0.24705884, b: 0.9803922, a: 1}
   - {r: 0.9803922, g: 0.89019614, b: 0.24705884, a: 1}
+  playerWeapon: {fileID: 8207807460963443992}
+--- !u!114 &8207807460963443992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583809001150326004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0bf4643a3158a24fbc334250bc4ec2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerWeaponHolder: {fileID: 1138383294492805081}
+  mainSprite: {fileID: 583809002504579197}
+  holdingWeapon: {fileID: 0}
 --- !u!1 &583809001477869529
 GameObject:
   m_ObjectHideFlags: 0
