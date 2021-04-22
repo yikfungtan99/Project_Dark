@@ -20,7 +20,7 @@ public class RandomSelector : NetworkBehaviour
         if (isServer)
         {
             CheckForNonSelectable();
-            StartCoroutine(RandomTimer());
+            InvokeRepeating("RandomSelect", 2.0f, frequency);
         }
     }
 
@@ -34,15 +34,6 @@ public class RandomSelector : NetworkBehaviour
                 print(objs + " is not selectable, removing...");
             }
         }
-    }
-
-    IEnumerator RandomTimer()
-    {
-        yield return new WaitForSeconds(frequency);
-
-        RandomSelect();
-
-        StartCoroutine(RandomTimer());
     }
 
     private void RandomSelect()

@@ -32,8 +32,19 @@ public class PickupSpawnpoint : NetworkBehaviour, ISelectable
 
     void Spawn()
     {
-        int rand = Random.Range(0, possibleSpawn.Count);
-        GameObject spawn = Instantiate(possibleSpawn[rand], transform.position, Quaternion.identity);
+        float rand = Random.Range(0.0f, 100.0f);
+        int select = 0;
+
+        if(rand < 30.0f)
+        {
+            select = 1;
+        }
+        else
+        {
+            select = 0;
+        }
+
+        GameObject spawn = Instantiate(possibleSpawn[select], transform.position, Quaternion.identity);
         NetworkServer.Spawn(spawn);
         spawnedObject = spawn;
     }

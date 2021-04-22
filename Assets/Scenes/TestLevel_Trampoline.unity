@@ -1725,7 +1725,7 @@ PrefabInstance:
     - target: {fileID: 2667951194803012162, guid: 03794ac638922c44d8306474e1757af1,
         type: 3}
       propertyPath: frequency
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2667951194803012162, guid: 03794ac638922c44d8306474e1757af1,
         type: 3}
