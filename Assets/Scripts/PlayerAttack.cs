@@ -84,7 +84,7 @@ public class PlayerAttack : NetworkBehaviour
 
             if (target)
             {
-                target.ModifyHealth(-1);
+                target.ModifyHealth(-2);
             }
 
             //attackEffects.intensity = Random.Range(0.5f, 1.0f);

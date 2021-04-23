@@ -35,7 +35,7 @@ public class PickupSpawnpoint : NetworkBehaviour, ISelectable
         float rand = Random.Range(0.0f, 100.0f);
         int select = 0;
 
-        if(rand < 30.0f)
+        if(rand < 10.0f)
         {
             select = 1;
         }

@@ -32,7 +32,7 @@ public class Crate : Pickups
             GameObject effect = GameObject.Instantiate(healEffect, transform.position, Quaternion.identity);
             Destroy(effect, 1);
             NetworkServer.Destroy(gameObject);
-            collision.transform.parent.gameObject.GetComponent<PlayerStats>().ModifyHealth(3);
+            collision.transform.parent.gameObject.GetComponent<PlayerStats>().ModifyHealth(1);
         }
     }
 }
