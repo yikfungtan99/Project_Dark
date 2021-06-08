@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PickupSpawnpoint : NetworkBehaviour, ISelectable
 {
-    [SerializeField] private GameObject spawnPrefab;
     private GameObject spawnedObject;
 
     private List<GameObject> possibleSpawn = new List<GameObject>();
@@ -14,13 +13,10 @@ public class PickupSpawnpoint : NetworkBehaviour, ISelectable
         List<GameObject> weaponPickups = new List<GameObject>();
         
 
-        foreach (GameObject weaponObj in WeaponStorageHolder.Instance.WeaponStorage.weapons)
+        foreach (GameObject dropObj in DropStorageHolder.Instance.dropStorage.drops)
         {
-            possibleSpawn.Add(weaponObj.GetComponent<Weapon>().pickup);
+            possibleSpawn.Add(dropObj);
         }
-        
-        
-        possibleSpawn.Add(spawnPrefab);
     }
 
     public void Trigger()
@@ -32,19 +28,9 @@ public class PickupSpawnpoint : NetworkBehaviour, ISelectable
 
     void Spawn()
     {
-        float rand = Random.Range(0.0f, 100.0f);
-        int select = 0;
+        int rand = Random.Range(0, possibleSpawn.Count);
 
-        if(rand < 10.0f)
-        {
-            select = 1;
-        }
-        else
-        {
-            select = 0;
-        }
-
-        GameObject spawn = Instantiate(possibleSpawn[select], transform.position, Quaternion.identity);
+        GameObject spawn = Instantiate(possibleSpawn[2], transform.position, Quaternion.identity);
         NetworkServer.Spawn(spawn);
         spawnedObject = spawn;
     }

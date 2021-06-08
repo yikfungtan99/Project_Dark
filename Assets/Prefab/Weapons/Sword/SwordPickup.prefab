@@ -205,6 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  weapon: {fileID: 1112113642023719276, guid: 2ed6df0f6136ce9469c8ba9b4e18d650, type: 3}
 --- !u!114 &5034928541225551439
 MonoBehaviour:
   m_ObjectHideFlags: 0

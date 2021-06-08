@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class WeaponPickup : Pickups
 {
-    private WeaponStorage potentialWeapons;
-
-    private void Start()
-    {
-        potentialWeapons = WeaponStorageHolder.Instance.WeaponStorage;
-    }
+    [SerializeField] private GameObject weapon;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -24,7 +19,7 @@ public class WeaponPickup : Pickups
         {
             if (collision.gameObject.GetComponentInParent<PlayerWeaponHolder>() != null)
             {
-                collision.gameObject.GetComponentInParent<PlayerWeaponHolder>().Equip(Random.Range(0, potentialWeapons.weapons.Count));
+                collision.gameObject.GetComponentInParent<PlayerWeaponHolder>().Equip(weapon);
                 NetworkServer.Destroy(gameObject);
             }
         }

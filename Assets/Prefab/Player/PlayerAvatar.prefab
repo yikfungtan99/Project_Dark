@@ -242,7 +242,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  torch: {fileID: 583809002242277846}
+  selfLight: {fileID: 583809003151086915}
+  torch: {fileID: 583809002242277845}
+  torchRange: 6
+  torchRangeOffset: 1.5
+  torchBlockLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  torchPlayerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  battery: 0
+  maxTorchBattery: 100
+  currentPercentage: 0
+  drainRate: 10
+  torchOn: 0
+  outOfBattery: 0
+  move: {fileID: 583809001150326008}
 --- !u!114 &4518130023235174762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,10 +297,11 @@ MonoBehaviour:
   syncInterval: 0.02
   maxHealth: 5
   health: 5
+  battery: 0
   playerNum: 0
   gracePeriod: 0.5
   sprite: {fileID: 583809002504579197}
-  torch: {fileID: 583809002242277846}
+  torch: {fileID: 8693547302731694435}
   alive: 1
   grace: 0
   reveal: 0
@@ -400,8 +417,6 @@ GameObject:
   m_Component:
   - component: {fileID: 583809002242277844}
   - component: {fileID: 583809002242277845}
-  - component: {fileID: 583809002242277846}
-  - component: {fileID: 583809002242277847}
   - component: {fileID: 4998737955254739064}
   m_Layer: 0
   m_Name: Torch
@@ -466,50 +481,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &583809002242277846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583809002242277843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 368e0d9a7ebc7b343a06c85bcde4b165, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfLight: {fileID: 583809003151086915}
-  torch: {fileID: 583809002242277845}
-  torchRange: 6
-  torchRangeOffset: 1.5
-  torchBlockLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  torchPlayerLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  torchOn: 0
-  battery: {fileID: 0}
-  outOfBattery: 0
-  move: {fileID: 583809001150326008}
---- !u!114 &583809002242277847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583809002242277843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf17d64792800f4fab544f86218ae66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  torch: {fileID: 583809002242277846}
-  batteryText: {fileID: 0}
-  torchBattery: 0
-  maxTorchBattery: 100
-  currentPercentage: 0
-  drainRate: 10
 --- !u!114 &4998737955254739064
 MonoBehaviour:
   m_ObjectHideFlags: 0

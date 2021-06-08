@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3225,7 +3225,7 @@ GameObject:
   - component: {fileID: 1352921075}
   - component: {fileID: 1352921074}
   m_Layer: 0
-  m_Name: WeaponStorage
+  m_Name: DropStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3240,10 +3240,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1352921073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d0a1bcc238680f419c24cd79c3bc8b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 31bd1510b8647b04dbf1a2d36bdd67d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponStorage: {fileID: 11400000, guid: be187cc5d4f15684ea8e40da7a2973d6, type: 2}
+  dropStorage: {fileID: 11400000, guid: 186ad9d8acdaa024fa96c78bdf3aad4b, type: 2}
 --- !u!4 &1352921075
 Transform:
   m_ObjectHideFlags: 0
@@ -7625,49 +7625,49 @@ MonoBehaviour:
   sounds:
   - soundName: Attack
     clip: {fileID: 8300000, guid: 356a7f3ce783e6445bacd1fcce06b824, type: 3}
-    volume: 0.5
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - soundName: Jump
     clip: {fileID: 8300000, guid: 19540834ad2a5ec4f914d75c71db4fcd, type: 3}
-    volume: 0.25
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - soundName: Torch
     clip: {fileID: 8300000, guid: 4a9c2789ddde88345b2d3e53860c412e, type: 3}
-    volume: 0.5
+    volume: 0.05
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - soundName: Footsteps
     clip: {fileID: 8300000, guid: ef064409e0a17ac43998a70a0cf7947d, type: 3}
-    volume: 0.5
+    volume: 0.02
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - soundName: Trampoline
     clip: {fileID: 8300000, guid: 04d81bca1a83b054fabe229448fade7a, type: 3}
-    volume: 0.25
+    volume: 0.05
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - soundName: Background
     clip: {fileID: 8300000, guid: de078effd3086ed47ac5b565a4c63886, type: 3}
-    volume: 0.2
+    volume: 0.05
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - soundName: Break
     clip: {fileID: 8300000, guid: 6366c182090b5b24a91f15f618e8ad45, type: 3}
-    volume: 0.3
+    volume: 0.01
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - soundName: Draw
     clip: {fileID: 8300000, guid: 7a7703f6fab8bd1439d65f59328b895b, type: 3}
-    volume: 0.3
+    volume: 0.01
     pitch: 1.8
     loop: 0
     source: {fileID: 0}

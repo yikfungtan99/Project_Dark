@@ -7,6 +7,7 @@ public class PlayerHUDPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtHealth;
+    [SerializeField] private TextMeshProUGUI txtBattery;
 
     public PlayerStats playerStats;
 
@@ -17,6 +18,7 @@ public class PlayerHUDPanel : MonoBehaviour
         {
             txtName.text = "Player " + (playerStats.playerNum);
             txtHealth.text = "Health:" + playerStats.health;
+            txtBattery.text = "Battery: " + playerStats.battery;
         }
     }
 }

@@ -27,16 +27,23 @@ public class PlayerWeaponHolder : NetworkBehaviour
         }
     }
 
-    public void Equip(int weaponIndex)
+    public void Equip(GameObject equippable)
     {
-        RpcEquip(weaponIndex);
+        if (holdingWeapon) return;
+        for (int i = 0; i < DropStorageHolder.Instance.dropStorage.drops.Count; i++)
+        {
+            if(DropStorageHolder.Instance.dropStorage.equippable[i] == equippable)
+            {
+                RpcEquip(i);
+                break;
+            }
+        }
     }
 
     [ClientRpc]
-    public void RpcEquip(int weaponIndex)
+    public void RpcEquip(int equipIndex)
     {
-        if (holdingWeapon) return;
-        GameObject weaponRef = WeaponStorageHolder.Instance.WeaponStorage.weapons[weaponIndex];
+        GameObject weaponRef = DropStorageHolder.Instance.dropStorage.equippable[equipIndex];
         GameObject weaponObj = Instantiate(weaponRef, playerWeaponHolder);
         Weapon weapon = weaponObj.GetComponent<Weapon>();
         sprite = weapon.gameObject.GetComponent<SpriteRenderer>();

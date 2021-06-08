@@ -1,12 +1,13 @@
 ﻿using Mirror;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using static UnityEngine.InputSystem.InputAction;
 
-public class CustomTorch : MonoBehaviour
+public class PlayerTorch : NetworkBehaviour
 {
+    [Header ("Torch")]
     [SerializeField] private GameObject selfLight;
     [SerializeField] private Light2D torch;
     [SerializeField] private float torchRange;
@@ -16,18 +17,56 @@ public class CustomTorch : MonoBehaviour
     [SerializeField] private LayerMask torchBlockLayer;
     [SerializeField] private LayerMask torchPlayerLayer;
 
+    [Header("Battery")]
+    [SyncVar] public float battery;
+    public float maxTorchBattery;
+    public float currentPercentage;
+    public float drainRate;
+
+
     public bool torchOn;
     private float radius;
 
-    public TorchBattery battery;
     public bool outOfBattery = false;
 
     [SerializeField] private PlatformerMovement move;
 
+    private PlayerStats stats;
+
     // Start is called before the first frame update
     void Start()
     {
-        battery = GetComponent<TorchBattery>() ? GetComponent<TorchBattery>() : null;
+        stats = GetComponentInParent<PlayerStats>();
+        battery = maxTorchBattery;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!hasAuthority) return;
+        CmdBatteryUpdate();
+    }
+
+    [Command]
+    private void CmdBatteryUpdate()
+    {
+        BatteryUpdate();
+    }
+
+    private void BatteryUpdate()
+    {
+        CheckForBattery();
+
+        if (torchOn) battery -= drainRate * Time.deltaTime;
+
+        if (battery <= 0)
+        {
+            battery = 0;
+        }
+
+        currentPercentage = (battery / maxTorchBattery) * 100;
+
+        stats.battery = (int) currentPercentage;
     }
 
     // Update is called once per frame
@@ -41,7 +80,8 @@ public class CustomTorch : MonoBehaviour
 
     public void Torch()
     {
-        if (torchOn) {
+        if (torchOn)
+        {
 
             TorchOff();
 
@@ -79,20 +119,68 @@ public class CustomTorch : MonoBehaviour
         {
             torch.pointLightOuterRadius = torchRange;
         }
-
-       
-        //if (hitPlayer.Length > 0)
-        //{
-        //    for (int i = 0; i < hitPlayer.Length; i++)
-        //    {
-        //        if (hitPlayer[i].collider.transform.parent != transform.parent) hitPlayer[i].collider.GetComponentInParent<PlayerStats>().reveal = true;
-        //    }
-        //}
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, transform.up * torchRange);
+    }
+
+  
+    private void CheckForBattery()
+    {
+        if (battery <= 0)
+        {
+            outOfBattery = true;
+            if (torchOn)
+            {
+                CmdTorchOff();
+            }
+        }
+        else
+        {
+            outOfBattery = false;
+        }
+    }
+
+    public void Torch(CallbackContext ctx)
+    {
+        if (!hasAuthority) return;
+        if (!outOfBattery)
+        {
+            if (!torchOn)
+            {
+                CmdTorchOn();
+            }
+            else
+            {
+                CmdTorchOff();
+            }
+        }
+    }
+
+    [Command]
+    public void CmdTorchOn()
+    {
+        RpcTorchOn();
+    }
+
+    [ClientRpc]
+    public void RpcTorchOn()
+    {
+        TorchOn();
+    }
+    
+    [Command]
+    public void CmdTorchOff()
+    {
+        RpcTorchOff();
+    }
+
+    [ClientRpc]
+    public void RpcTorchOff()
+    {
+        TorchOff();
     }
 }

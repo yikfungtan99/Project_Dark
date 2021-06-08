@@ -3,9 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CrateType
+{
+    HEAL,
+    BATTERY
+}
+
 public class Crate : Pickups
 {
-    [SerializeField] private GameObject healEffect;
+    [SerializeField] private CrateType crateType;
+    [SerializeField] private GameObject pickupEffect;
+    [SerializeField] private int effectAmount;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +37,29 @@ public class Crate : Pickups
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerHit")) return;
         if (collision.gameObject.transform.parent.CompareTag("Player"))
         {
-            GameObject effect = GameObject.Instantiate(healEffect, transform.position, Quaternion.identity);
-            Destroy(effect, 1);
+            if (pickupEffect != null)
+            {
+                GameObject effect = GameObject.Instantiate(pickupEffect, transform.position, Quaternion.identity);
+                Destroy(effect, 1);
+            }
+
+            switch (crateType)
+            {
+                case CrateType.HEAL:
+
+                    collision.transform.parent.gameObject.GetComponent<PlayerStats>().ModifyHealth(effectAmount);
+                    break;
+
+                case CrateType.BATTERY:
+
+                    collision.transform.parent.gameObject.GetComponent<PlayerStats>().ChargeBattery(effectAmount);
+                    break;
+
+                default:
+                    break;
+            }
+
             NetworkServer.Destroy(gameObject);
-            collision.transform.parent.gameObject.GetComponent<PlayerStats>().ModifyHealth(1);
         }
     }
 }

@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 389aef41ecf47f645b0b7f837ba2bbfe, type: 3}
-  m_Name: Weapon Storage
+  m_Script: {fileID: 11500000, guid: 2d42c72323caa794d9eb3d344f758d67, type: 3}
+  m_Name: Drop Storage
   m_EditorClassIdentifier: 
-  weapons:
+  drops:
+  - {fileID: 5381992467340484838, guid: 71d6b41add2810b4e9c587e83f389053, type: 3}
+  - {fileID: 1048331591633827298, guid: 11187c95bf2663f4891ad8e4e6dadd94, type: 3}
+  - {fileID: 1048331591633827298, guid: c8826f4428116784586221cbaf1d42ea, type: 3}
+  equippable:
   - {fileID: 1112113642023719276, guid: 2ed6df0f6136ce9469c8ba9b4e18d650, type: 3}

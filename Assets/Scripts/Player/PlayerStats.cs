@@ -8,12 +8,13 @@ public class PlayerStats : NetworkBehaviour
 {
     public int maxHealth;
     [SyncVar(hook = "DamageEffects")] public int health;
+    [SyncVar(hook = "ChargeEffects")] public int battery;
 
     [SyncVar] public int playerNum = 0;
 
     [SerializeField] private float gracePeriod = 0.5f;
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private CustomTorch torch;
+    [SerializeField] private PlayerTorch torch;
 
     public bool alive = true;
     public bool grace = false;
@@ -87,9 +88,29 @@ public class PlayerStats : NetworkBehaviour
 
             if(newValue <= 0)
             {
-                //CmdDeath();
                 Death();
             }
+        }
+    }
+
+    public void ChargeBattery(int amnt)
+    {
+        CmdChargeBattery(amnt);
+    }
+
+    [Command(ignoreAuthority = true)]
+    public void CmdChargeBattery(int amnt)
+    {
+        torch.battery += amnt;
+
+        if (torch.battery >= torch.maxTorchBattery) torch.battery = torch.maxTorchBattery;
+    }
+
+    private void ChargeEffects(int oldValue, int newValue)
+    {
+        if (newValue > oldValue)
+        {
+            print("charge");
         }
     }
 
