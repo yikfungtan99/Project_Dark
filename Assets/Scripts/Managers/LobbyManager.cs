@@ -9,6 +9,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Level
+{
+    [Scene] public string levelScene;
+    public string levelName;
+    public Sprite levelImage;
+}
+
 public class LobbyManager : NetworkBehaviour
 {
     NetworkManagerCustom nm;
@@ -34,6 +42,13 @@ public class LobbyManager : NetworkBehaviour
     public UnityEvent audioJoin;
     public UnityEvent audioDisconnect;
 
+    [Header("Level Selection")]
+    [SerializeField] private Level[] levels;
+    private int levelSelect;
+
+    [SerializeField] private TextMeshProUGUI levelNameText;
+    [SerializeField] private Image levelImage;
+
     public void Awake()
     {
         if (_instance != null && _instance != this)
@@ -52,7 +67,8 @@ public class LobbyManager : NetworkBehaviour
         nm = NetworkManagerCustom.Instance ? NetworkManagerCustom.Instance : null;
         pm = GetComponent<PlayersManager>();
         playerList = nm.playerList;
-        
+
+        ChangeLevel(levelSelect);
     }
 
     private void Update()
@@ -237,5 +253,26 @@ public class LobbyManager : NetworkBehaviour
     public void StartGame()
     {
         nm.ServerChangeScene(nm.gameScene);
+    }
+
+    public void ChangeLevel(int dir)
+    {
+        levelSelect += dir;
+
+        if(levelSelect < 0)
+        {
+            levelSelect = levels.Length;
+        }
+
+        if(levelSelect >= levels.Length)
+        {
+            levelSelect = 0;
+        }
+
+        Level level = levels[levelSelect];
+
+        levelNameText.text = level.levelName;
+        levelImage.sprite = level.levelImage;
+        nm.gameScene = level.levelScene;
     }
 }
