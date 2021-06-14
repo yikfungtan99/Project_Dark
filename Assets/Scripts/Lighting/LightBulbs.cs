@@ -14,7 +14,7 @@ public class LightBulbs : MonoBehaviour, ISelectable
         lightBulb.gameObject.SetActive(false);
     }
 
-    public void Trigger()
+    public virtual void Trigger()
     {
         LightsOn();
         StartCoroutine(Timer());
