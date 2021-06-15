@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class testrb : MonoBehaviour, ISelectable
 {
-    public void Trigger()
+    public void Select()
     {
         print("HELLO I AM" + gameObject.name);
     }

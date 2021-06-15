@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface ISelectable
 {
-    void Trigger();
+    void Select();
 }
 
 public class RandomSelector : NetworkBehaviour
@@ -64,7 +64,7 @@ public class RandomSelector : NetworkBehaviour
         if (target != null)
         {
             //target.Trigger();
-            target.Trigger();
+            target.Select();
         }
     }
 }

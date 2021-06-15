@@ -19,7 +19,7 @@ public class PickupSpawnpoint : NetworkBehaviour, ISelectable
         }
     }
 
-    public void Trigger()
+    public void Select()
     {
         if (!isServer) return;
         if (spawnedObject != null) return;

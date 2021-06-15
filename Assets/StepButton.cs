@@ -14,24 +14,16 @@ public class StepButton : Trigger
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(mode == buttonMode.STEP)
-        {
-            if (collision.transform.parent.CompareTag("Player"))
-            {
-                FireTrigger();
-                print("Player Detected");
-            }
-        }
+        FireTrigger();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (mode == buttonMode.STAY)
+        if(collision.transform.parent.CompareTag("Player"))
         {
-            if (collision.transform.parent.CompareTag("Player"))
+            if (mode == buttonMode.STAY)
             {
                 FireTrigger();
-                print("Player Stayed");
             }
         }
     }

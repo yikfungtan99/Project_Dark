@@ -9,28 +9,38 @@ public class LightBulbs : MonoBehaviour, ISelectable
     [SerializeField] private float timer;
     [SerializeField] private Light2D lightBulb;
 
+    protected bool lightOn = false;
+
     private void Awake()
     {
         lightBulb.gameObject.SetActive(false);
     }
 
-    public virtual void Trigger()
+    public void Select()
     {
         LightsOn();
         StartCoroutine(Timer());
     }
 
-    void LightsOn()
+    protected virtual void Trigger()
     {
+        LightsOn();
+        StartCoroutine(Timer());
+    }
+
+    protected void LightsOn()
+    {
+        lightOn = true;
         lightBulb.gameObject.SetActive(true);
     }
 
-    void LightsOff()
+    protected void LightsOff()
     {
+        lightOn = false;
         lightBulb.gameObject.SetActive(false);
     }
 
-    private IEnumerator Timer()
+    protected IEnumerator Timer()
     {
         yield return new WaitForSeconds(timer);
         LightsOff();
