@@ -14,7 +14,7 @@ public class StepButton : Trigger
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        FireTrigger();
+        if(isServer) RpcFireTrigger();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -23,7 +23,7 @@ public class StepButton : Trigger
         {
             if (mode == buttonMode.STAY)
             {
-                FireTrigger();
+                if (isServer) RpcFireTrigger();
             }
         }
     }
