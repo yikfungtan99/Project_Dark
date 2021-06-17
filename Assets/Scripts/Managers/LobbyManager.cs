@@ -44,7 +44,7 @@ public class LobbyManager : NetworkBehaviour
 
     [Header("Level Selection")]
     [SerializeField] private Level[] levels;
-    private int levelSelect;
+    [SyncVar(hook = nameof(UpdateLevelUI))] public int levelSelect;
 
     [SerializeField] private TextMeshProUGUI levelNameText;
     [SerializeField] private Image levelImage;
@@ -69,6 +69,18 @@ public class LobbyManager : NetworkBehaviour
         playerList = nm.playerList;
 
         ChangeLevel(levelSelect);
+
+        if (isServer)
+        {
+            UpdateLevelUI(levelSelect, levelSelect);
+        }
+        
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        UpdateLevelUI(0, 0);
     }
 
     private void Update()
@@ -246,7 +258,6 @@ public class LobbyManager : NetworkBehaviour
         {
             nm.StopServer();
             nm.StopHost();
-            //SceneManager.LoadScene(nm.offlineScene);
         }
     }
 
@@ -258,13 +269,16 @@ public class LobbyManager : NetworkBehaviour
     public void ChangeLevel(int dir)
     {
         levelSelect += dir;
+    }
 
-        if(levelSelect < 0)
+    public void UpdateLevelUI(int oldValue, int newValue)
+    {
+        if (levelSelect < 0)
         {
             levelSelect = levels.Length;
         }
 
-        if(levelSelect >= levels.Length)
+        if (levelSelect >= levels.Length)
         {
             levelSelect = 0;
         }

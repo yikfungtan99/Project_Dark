@@ -1855,7 +1855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   lobbyPlayerShelf: {fileID: 623442876}
   lobbyPlayer: {fileID: 8988253221736984562, guid: 31e61f5d36ba0134b9c816a5effce450,
     type: 3}
