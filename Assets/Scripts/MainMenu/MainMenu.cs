@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject gamePanel;
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject helpPanel;
+    [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject connectingPanel;
     [SerializeField] GameObject serverIsOfflinePanel;
     [SerializeField] GameObject lobbyPanel;
@@ -32,6 +33,8 @@ public class MainMenu : MonoBehaviour
         playerNameInput.text = PlayerPrefs.GetString("playerName");
 
         nm.lrm.diconnectedFromRelay.AddListener(FailedToConnectToRelay);
+        
+        settingsPanel.SetActive(false);
     }
 
     public void LoadGamePanel()
@@ -47,6 +50,7 @@ public class MainMenu : MonoBehaviour
         serverIsOfflinePanel.SetActive(false);
         lobbyPanel.SetActive(false);
         helpPanel.SetActive(false);
+        settingsPanel.SetActive(false);
     }
 
     public void LoadMainMenuPanel()
@@ -58,12 +62,19 @@ public class MainMenu : MonoBehaviour
         serverIsOfflinePanel.SetActive(false);
         lobbyPanel.SetActive(false);
         helpPanel.SetActive(false);
+        settingsPanel.SetActive(false);
     }
 
     public void LoadHelpPanel()
     {
         mainMenuPanel.SetActive(false);
         helpPanel.SetActive(true);
+    }
+
+    public void LoadSettingsPanel()
+    {
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(true);
     }
 
     public void OfflineLobby()
