@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestLevel_NoTrampoline.unity
     guid: e39c124fed4356e40b0235e2ad4f14cf
+  - enabled: 1
+    path: Assets/Scenes/Level_Warehouse.unity
+    guid: e8ab1e3b1ff89ec45b1dc0c917680083
   m_configObjects: {}

@@ -96,4 +96,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickup: {fileID: 5381992467340484838, guid: 71d6b41add2810b4e9c587e83f389053, type: 3}
-  charges: 3
+  charges: 5

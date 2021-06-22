@@ -256,7 +256,7 @@ MonoBehaviour:
   battery: 0
   maxTorchBattery: 100
   currentPercentage: 0
-  drainRate: 10
+  drainRate: 5
   torchOn: 0
   outOfBattery: 0
   move: {fileID: 583809001150326008}

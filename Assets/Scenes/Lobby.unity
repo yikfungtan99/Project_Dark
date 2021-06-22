@@ -1892,12 +1892,13 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   levels:
+  - levelScene: Assets/Scenes/Level_Warehouse.unity
+    levelName: Warehouse
+    levelImage: {fileID: 21300000, guid: 099b8b60df3bef04eb18a7e4ba05ecfb, type: 3}
   - levelScene: Assets/Scenes/TestLevel_Trampoline.unity
     levelName: Trampolines
     levelImage: {fileID: 21300000, guid: c38a04fb6e79ee449866b187c164e4de, type: 3}
-  - levelScene: Assets/Scenes/TestLevel_NoTrampoline.unity
-    levelName: No Trampolines
-    levelImage: {fileID: 21300000, guid: 099b8b60df3bef04eb18a7e4ba05ecfb, type: 3}
+  levelSelect: 0
   levelNameText: {fileID: 788274948}
   levelImage: {fileID: 1660989441}
 --- !u!114 &1701323938

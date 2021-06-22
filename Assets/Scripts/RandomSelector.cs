@@ -49,7 +49,6 @@ public class RandomSelector : NetworkBehaviour
             return;
         }
        
-        //target.Trigger();
         RpcTriggerTarget(rand);
 
     }
