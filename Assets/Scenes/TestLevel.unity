@@ -3014,7 +3014,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLite: {fileID: 1607736125}
-  intensityOnStart: 0.1
+  targetDarkness: 0
+  secondsToDark: 0
 --- !u!1 &1660588150
 GameObject:
   m_ObjectHideFlags: 0

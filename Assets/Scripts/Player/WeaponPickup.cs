@@ -14,13 +14,19 @@ public class WeaponPickup : Pickups
 
     public override void PickUp(Collider2D collision)
     {
+        if (!isServer) return;
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerHit")) return;
         if (collision.gameObject.transform.parent.CompareTag("Player"))
         {
-            if (collision.gameObject.GetComponentInParent<PlayerWeaponHolder>() != null)
+            PlayerWeaponHolder playerWeaponHolder = collision.gameObject.GetComponentInParent<PlayerWeaponHolder>();
+
+            if (playerWeaponHolder != null)
             {
-                collision.gameObject.GetComponentInParent<PlayerWeaponHolder>().Equip(weapon);
-                NetworkServer.Destroy(gameObject);
+                if(playerWeaponHolder.holdingWeapon == null)
+                {
+                    playerWeaponHolder.Equip(weapon);
+                    NetworkServer.Destroy(gameObject);
+                }
             }
         }
     }

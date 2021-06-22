@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatform : NetworkBehaviour
+public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] private Transform platform;
     [SerializeField] private float moveSpeed;
@@ -15,18 +15,15 @@ public class MovingPlatform : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isServer)
+        platform.position = Vector2.MoveTowards(platform.position, wayPoint[curWaypoint].position, moveSpeed * Time.deltaTime);
+
+        if (platform.position == wayPoint[curWaypoint].position)
         {
-            platform.position = Vector2.MoveTowards(platform.position, wayPoint[curWaypoint].position, moveSpeed * Time.deltaTime);
+            curWaypoint += 1;
 
-            if(platform.position == wayPoint[curWaypoint].position)
+            if (curWaypoint >= wayPoint.Length)
             {
-                curWaypoint += 1;
-
-                if(curWaypoint >= wayPoint.Length)
-                {
-                    curWaypoint = 0;
-                }
+                curWaypoint = 0;
             }
         }
     }

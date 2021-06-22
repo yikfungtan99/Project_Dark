@@ -15,18 +15,6 @@ public class Crate : Pickups
     [SerializeField] private GameObject pickupEffect;
     [SerializeField] private int effectAmount;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PickUp(collision);

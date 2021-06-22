@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 7398096088754531920}
   - component: {fileID: 1884363576301388994}
   - component: {fileID: 8207807460963443992}
+  - component: {fileID: -3275802062894296111}
   m_Layer: 9
   m_Name: PlayerAvatar
   m_TagString: Player
@@ -350,6 +351,23 @@ MonoBehaviour:
   playerWeaponHolder: {fileID: 1138383294492805081}
   mainSprite: {fileID: 583809002504579197}
   holdingWeapon: {fileID: 0}
+--- !u!1818360608 &-3275802062894296111
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583809001150326004}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffset: {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources: []
 --- !u!1 &583809001477869529
 GameObject:
   m_ObjectHideFlags: 0
