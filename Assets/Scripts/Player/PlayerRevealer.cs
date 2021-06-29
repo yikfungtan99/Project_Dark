@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerRevealer : Revealer
 {
+    public float torchRevealRange = 2;
     private Vector2 initCircleOffset;
 
     private void Start()
@@ -13,20 +14,32 @@ public class PlayerRevealer : Revealer
 
     protected override void Update()
     {
-        RotateCircle();
         base.Update();
     }
 
-    private void RotateCircle()
+    protected override void Detection()
     {
-        float y = transform.parent.rotation.y;
-        if (Mathf.Abs(transform.parent.rotation.y) > 0.1)
+        RaycastHit2D[] players = Physics2D.RaycastAll(transform.parent.position, transform.parent.right * torchRevealRange);
+
+        if (players.Length > 0)
         {
-            circleOffset = initCircleOffset * -1;
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].transform.parent)
+                {
+                    if (players[i].transform.parent.CompareTag("Player"))
+                    {
+                        Reveal(players[i].transform.GetComponentInParent<PlayerStats>());
+                    }
+                }
+            }
         }
-        else
-        {
-            circleOffset = initCircleOffset;
-        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawRay(transform.parent.position, transform.parent.right * torchRevealRange);
     }
 }

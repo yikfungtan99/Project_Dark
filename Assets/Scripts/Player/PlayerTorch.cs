@@ -9,8 +9,11 @@ public class PlayerTorch : NetworkBehaviour
 {
     [Header ("Torch")]
     [SerializeField] private GameObject selfLight;
-    [SerializeField] private Light2D torch;
+    [SerializeField] private GameObject torchObject;
     [SerializeField] private float torchRange;
+
+    private Light2D torchLight;
+    private PlayerRevealer playerTorchRevealer;
 
     [Range(0.1f, 3.0f)]
     [SerializeField] private float torchRangeOffset;
@@ -23,11 +26,8 @@ public class PlayerTorch : NetworkBehaviour
     public float currentPercentage;
     public float drainRate;
 
-
     public bool torchOn;
     private float radius;
-
-    public bool outOfBattery = false;
 
     [SerializeField] private PlatformerMovement move;
 
@@ -38,6 +38,9 @@ public class PlayerTorch : NetworkBehaviour
     {
         stats = GetComponentInParent<PlayerStats>();
         battery = maxTorchBattery;
+
+        torchLight = torchObject.GetComponent<Light2D>();
+        playerTorchRevealer = torchObject.GetComponent<PlayerRevealer>();
     }
 
     // Update is called once per frame
@@ -95,36 +98,37 @@ public class PlayerTorch : NetworkBehaviour
     public void TorchOn()
     {
         selfLight.SetActive(true);
-        torch.enabled = true;
+        torchLight.enabled = true;
         torchOn = true;
     }
 
     public void TorchOff()
     {
         selfLight.SetActive(false);
-        torch.enabled = false;
+        torchLight.enabled = false;
         torchOn = false;
     }
 
     private void TorchRange()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, torchRange, torchBlockLayer);
-        //RaycastHit2D[] hitPlayer = Physics2D.RaycastAll(transform.position, transform.up, torchRange, torchPlayerLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, torchRange, torchBlockLayer);
 
         if (hit)
         {
-            torch.pointLightOuterRadius = hit.distance + torchRangeOffset;
+            torchLight.pointLightOuterRadius = hit.distance + torchRangeOffset;
+            playerTorchRevealer.torchRevealRange = hit.distance;
         }
         else
         {
-            torch.pointLightOuterRadius = torchRange;
+            torchLight.pointLightOuterRadius = torchRange;
+            playerTorchRevealer.torchRevealRange = torchRange;
         }
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.up * torchRange);
+        Gizmos.DrawRay(transform.position, transform.right * torchRange);
     }
 
   
@@ -132,35 +136,30 @@ public class PlayerTorch : NetworkBehaviour
     {
         if (battery <= 0)
         {
-            outOfBattery = true;
             if (torchOn)
             {
                 CmdTorchOff();
             }
-        }
-        else
-        {
-            outOfBattery = false;
         }
     }
 
     public void Torch(CallbackContext ctx)
     {
         if (!hasAuthority) return;
-        if (!outOfBattery)
+
+        if (battery <= 0) return;
+
+        if (!torchOn)
         {
-            if (!torchOn)
-            {
-                CmdTorchOn();
-            }
-            else
-            {
-                CmdTorchOff();
-            }
+            CmdTorchOn();
+        }
+        else
+        {
+            CmdTorchOff();
         }
     }
 
-    [Command]
+    [Command(ignoreAuthority = true)]
     public void CmdTorchOn()
     {
         RpcTorchOn();
@@ -172,7 +171,7 @@ public class PlayerTorch : NetworkBehaviour
         TorchOn();
     }
     
-    [Command]
+    [Command(ignoreAuthority = true)]
     public void CmdTorchOff()
     {
         RpcTorchOff();

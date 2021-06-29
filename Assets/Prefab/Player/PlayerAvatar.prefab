@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 7398096088754531920}
   - component: {fileID: 1884363576301388994}
   - component: {fileID: 8207807460963443992}
-  - component: {fileID: -3275802062894296111}
+  - component: {fileID: 3815671063244218376}
   m_Layer: 9
   m_Name: PlayerAvatar
   m_TagString: Player
@@ -244,8 +244,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   selfLight: {fileID: 583809003151086915}
-  torch: {fileID: 583809002242277845}
-  torchRange: 6
+  torchObject: {fileID: 583809002242277843}
+  torchRange: 5
   torchRangeOffset: 1.5
   torchBlockLayer:
     serializedVersion: 2
@@ -258,7 +258,6 @@ MonoBehaviour:
   currentPercentage: 0
   drainRate: 5
   torchOn: 0
-  outOfBattery: 0
   move: {fileID: 583809001150326008}
 --- !u!114 &4518130023235174762
 MonoBehaviour:
@@ -351,23 +350,25 @@ MonoBehaviour:
   playerWeaponHolder: {fileID: 1138383294492805081}
   mainSprite: {fileID: 583809002504579197}
   holdingWeapon: {fileID: 0}
---- !u!1818360608 &-3275802062894296111
-PositionConstraint:
+--- !u!114 &3815671063244218376
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583809001150326004}
   m_Enabled: 1
-  m_Weight: 1
-  m_TranslationAtRest: {x: 0, y: 0, z: 0}
-  m_TranslationOffset: {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 0
-  m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 0
-  m_Sources: []
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  target: {fileID: 583809002242277844}
 --- !u!1 &583809001477869529
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +487,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 0
   m_PointLightOuterAngle: 90
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 5
+  m_PointLightOuterRadius: 6
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -516,7 +517,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   circleOffset: {x: 3, y: 0}
-  circleRadius: 3
+  circleRadius: 2
+  torchRevealRange: 2
 --- !u!1 &583809002421635091
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +762,7 @@ GameObject:
   m_Component:
   - component: {fileID: 583809003151086916}
   - component: {fileID: 583809003151086917}
+  - component: {fileID: 6845883447693432984}
   m_Layer: 9
   m_Name: SelfLight
   m_TagString: Untagged
@@ -822,6 +825,24 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &6845883447693432984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583809003151086915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6070a954c8b434991291becd8a667e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 583809003151086917}
+  torchPlayerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  circleOffset: {x: 0, y: 0}
+  circleRadius: 0.1
 --- !u!1 &2365941568389961509
 GameObject:
   m_ObjectHideFlags: 0
