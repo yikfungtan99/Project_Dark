@@ -108,10 +108,7 @@ public class PlayerStats : NetworkBehaviour
 
     private void ChargeEffects(int oldValue, int newValue)
     {
-        if (newValue > oldValue)
-        {
-            print("charge");
-        }
+
     }
 
     IEnumerator Grace()

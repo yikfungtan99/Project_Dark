@@ -19,26 +19,20 @@ public class PlayerRevealer : Revealer
 
     protected override void Detection()
     {
-        RaycastHit2D[] players = Physics2D.RaycastAll(transform.parent.position, transform.parent.right * torchRevealRange);
+        RaycastHit2D[] players = Physics2D.RaycastAll(transform.parent.position, transform.parent.right * torchRevealRange, torchPlayerLayer);
 
-        if (players.Length > 0)
+        if(players.Length > 0)
         {
             for (int i = 0; i < players.Length; i++)
             {
-                if (players[i].transform.parent)
-                {
-                    if (players[i].transform.parent.CompareTag("Player"))
-                    {
-                        Reveal(players[i].transform.GetComponentInParent<PlayerStats>());
-                    }
-                }
+                //print(players[i].collider.gameObject);
             }
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.blue;
 
         Gizmos.DrawRay(transform.parent.position, transform.parent.right * torchRevealRange);
     }

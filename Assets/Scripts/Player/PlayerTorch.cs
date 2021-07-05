@@ -11,14 +11,16 @@ public class PlayerTorch : NetworkBehaviour
     [SerializeField] private GameObject selfLight;
     [SerializeField] private GameObject torchObject;
     [SerializeField] private float torchRange;
+    private float currentTorchRange;
 
     private Light2D torchLight;
-    private PlayerRevealer playerTorchRevealer;
 
     [Range(0.1f, 3.0f)]
     [SerializeField] private float torchRangeOffset;
     [SerializeField] private LayerMask torchBlockLayer;
     [SerializeField] private LayerMask torchPlayerLayer;
+
+    
 
     [Header("Battery")]
     [SyncVar] public float battery;
@@ -40,7 +42,6 @@ public class PlayerTorch : NetworkBehaviour
         battery = maxTorchBattery;
 
         torchLight = torchObject.GetComponent<Light2D>();
-        playerTorchRevealer = torchObject.GetComponent<PlayerRevealer>();
     }
 
     // Update is called once per frame
@@ -78,6 +79,7 @@ public class PlayerTorch : NetworkBehaviour
         if (torchOn)
         {
             TorchRange();
+            TorchReveal();
         }
     }
 
@@ -115,13 +117,33 @@ public class PlayerTorch : NetworkBehaviour
 
         if (hit)
         {
-            torchLight.pointLightOuterRadius = hit.distance + torchRangeOffset;
-            playerTorchRevealer.torchRevealRange = hit.distance;
+            currentTorchRange = hit.distance;
+            torchLight.pointLightOuterRadius = currentTorchRange + torchRangeOffset;
         }
         else
         {
+            currentTorchRange = torchRange;
             torchLight.pointLightOuterRadius = torchRange;
-            playerTorchRevealer.torchRevealRange = torchRange;
+        }
+    }
+
+    private void TorchReveal()
+    {
+        RaycastHit2D[] player = Physics2D.RaycastAll(transform.position, transform.right, currentTorchRange, torchPlayerLayer);
+
+        if(player.Length > 0)
+        {
+            for (int i = 0; i < player.Length; i++)
+            {
+                if(player[i].collider.transform.parent == transform.parent)
+                {
+                    continue;
+                }
+                else
+                {
+                    player[i].collider.transform.parent.GetComponent<PlayerStats>().reveal = true;
+                }
+            }
         }
     }
 
