@@ -27,12 +27,19 @@ public class GlobalLight : MonoBehaviour
     private float intensityOnStart;
     float curIntensity = 0;
 
+    public bool strikeThunder;
 
     // Start is called before the first frame update
     void Start()
     {
         globalLite.intensity = intensityOnStart;
         StartCoroutine(lightDimmer());
+    }
+
+    private void Update()
+    {
+        if (globalLite.intensity == targetDarkness)
+            strikeThunder = true;
     }
 
     IEnumerator lightDimmer()

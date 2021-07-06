@@ -49,6 +49,9 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI levelNameText;
     [SerializeField] private Image levelImage;
 
+    [SerializeField] private GameObject helpMenu;
+    [SerializeField] private Button helpButton;
+
     public void Awake()
     {
         if (_instance != null && _instance != this)
@@ -58,6 +61,11 @@ public class LobbyManager : NetworkBehaviour
         else
         {
             _instance = this;
+        }
+
+        if (!PlayerPrefs.HasKey("Help"))
+        {
+            LoadHelpMenu();
         }
     }
 
@@ -264,6 +272,19 @@ public class LobbyManager : NetworkBehaviour
     public void StartGame()
     {
         nm.ServerChangeScene(nm.gameScene);
+    }
+
+    public void LoadHelpMenu()
+    {
+        helpMenu.SetActive(true);
+        helpButton.gameObject.SetActive(false);
+    }
+
+    public void CloseHelpMenu()
+    {
+        helpMenu.SetActive(false);
+        helpButton.gameObject.SetActive(true);
+        PlayerPrefs.SetInt("Help", 1);
     }
 
     public void ChangeLevel(int dir)
