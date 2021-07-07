@@ -20,6 +20,8 @@ public class GameManager : NetworkBehaviour
     private Transform[] spawnPoint = new Transform[4];
 
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject helpPanel;
 
     public float gameEndedDelayTime;
 
@@ -173,6 +175,23 @@ public class GameManager : NetworkBehaviour
     private void RpcResetAvatarList()
     {
         ResetAvatarList();
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+    }
+
+    public void LoadHelpPanel()
+    {
+        pausePanel.SetActive(false);
+        helpPanel.SetActive(true);
+    }
+
+    public void LoadPausePanel()
+    {
+        helpPanel.SetActive(false);
+        pausePanel.SetActive(true);
     }
 
     public void Disconnect()

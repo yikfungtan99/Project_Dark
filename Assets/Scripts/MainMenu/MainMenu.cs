@@ -14,6 +14,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject helpPanel;
     [SerializeField] GameObject settingsPanel;
+    [SerializeField] GameObject creditsPanel;
+    [SerializeField] GameObject dinoLogo;
     [SerializeField] GameObject connectingPanel;
     [SerializeField] GameObject serverIsOfflinePanel;
     [SerializeField] GameObject lobbyPanel;
@@ -51,30 +53,43 @@ public class MainMenu : MonoBehaviour
         lobbyPanel.SetActive(false);
         helpPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        creditsPanel.SetActive(false);
+        dinoLogo.SetActive(false);
     }
 
     public void LoadMainMenuPanel()
     {
         playerNameInput.gameObject.SetActive(true);
         mainMenuPanel.SetActive(true);
+        dinoLogo.SetActive(true);
         gamePanel.SetActive(false);
         connectingPanel.SetActive(false);
         serverIsOfflinePanel.SetActive(false);
         lobbyPanel.SetActive(false);
         helpPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        creditsPanel.SetActive(false);
     }
 
     public void LoadHelpPanel()
     {
         mainMenuPanel.SetActive(false);
+        dinoLogo.SetActive(false);
         helpPanel.SetActive(true);
     }
 
     public void LoadSettingsPanel()
     {
         mainMenuPanel.SetActive(false);
+        dinoLogo.SetActive(false);
         settingsPanel.SetActive(true);
+    }
+
+    public void LoadCreditsPanel()
+    {
+        mainMenuPanel.SetActive(false);
+        dinoLogo.SetActive(false);
+        creditsPanel.SetActive(true);
     }
 
     public void OfflineLobby()
