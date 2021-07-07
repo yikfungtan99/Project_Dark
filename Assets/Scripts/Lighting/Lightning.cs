@@ -9,7 +9,8 @@ public class Lightning : MonoBehaviour
     public float maxInterval;
     public float minIntensity;
     public float maxIntensity;
-    public float flashInterval;
+    public float minflashInterval;
+    public float maxflashInterval;
     public float flashTimer;
     public bool canStrike;
     public bool fadeIntensity;
@@ -44,9 +45,10 @@ public class Lightning : MonoBehaviour
 
     private IEnumerator LightningFX()
     {
-        yield return new WaitForSeconds(flashInterval);
+        yield return new WaitForSeconds(Random.Range(minflashInterval, maxflashInterval));
 
         lightningAnimator.Play("StrikeLightning");
+        lightningFlash.gameObject.SetActive(true);
         lightningFlash.intensity = Random.Range(minIntensity, maxIntensity);
 
         StartCoroutine(ThunderFX());
@@ -57,6 +59,7 @@ public class Lightning : MonoBehaviour
 
         yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));
         canStrike = false;
+        lightningFlash.gameObject.SetActive(false);
     }
 
     private IEnumerator ThunderFX()
