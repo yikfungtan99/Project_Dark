@@ -38,8 +38,7 @@ public class GlobalLight : MonoBehaviour
 
     private void Update()
     {
-        if (globalLite.intensity == targetDarkness)
-            strikeThunder = true;
+        strikeThunder = true;
     }
 
     IEnumerator lightDimmer()

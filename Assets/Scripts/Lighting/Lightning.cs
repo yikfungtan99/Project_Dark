@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class Lightning : MonoBehaviour
+public class Lightning : NetworkBehaviour
 {
     public float minInterval;
     public float maxInterval;
@@ -27,12 +28,15 @@ public class Lightning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalLight.Instance.strikeThunder)
+        if (isServer)
         {
-            if (!canStrike)
+            if (GlobalLight.Instance.strikeThunder)
             {
-                StartCoroutine(LightningFX());
-                canStrike = true;
+                if (!canStrike)
+                {
+                    StartCoroutine(LightningFX());
+                    canStrike = true;
+                }
             }
         }
 
@@ -43,29 +47,42 @@ public class Lightning : MonoBehaviour
             lightningFlash.intensity = 0;
     }
 
+    [ClientRpc]
+    private void RpcFlashLighning(float lightningIntensity)
+    {
+        lightningAnimator.Play("StrikeLightning");
+        lightningFlash.gameObject.SetActive(true);
+        lightningFlash.intensity = lightningIntensity;
+    }
+
+    [ClientRpc]
+    private void RpcStrikeThunder(float thunderInterval)
+    {
+        StartCoroutine(ThunderFX(thunderInterval));
+    }
+
     private IEnumerator LightningFX()
     {
         yield return new WaitForSeconds(Random.Range(minflashInterval, maxflashInterval));
 
-        lightningAnimator.Play("StrikeLightning");
-        lightningFlash.gameObject.SetActive(true);
-        lightningFlash.intensity = Random.Range(minIntensity, maxIntensity);
+        float li = Random.Range(minIntensity, maxIntensity);
+        RpcFlashLighning(li);
 
-        StartCoroutine(ThunderFX());
+        float thunderDelay = Random.Range(0.25f, 1f);
+        RpcStrikeThunder(thunderDelay);
+    }
+
+    private IEnumerator ThunderFX(float thunderDelay)
+    {
+        yield return new WaitForSeconds(thunderDelay);
+        if (AudioManager.Instance != null) AudioManager.Instance.Play("Lightning");
 
         yield return new WaitForSeconds(flashTimer);
 
         fadeIntensity = true;
 
-        yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));
+        yield return new WaitForSeconds(thunderDelay);
         canStrike = false;
         lightningFlash.gameObject.SetActive(false);
-    }
-
-    private IEnumerator ThunderFX()
-    {
-        yield return new WaitForSeconds(Random.Range(0.25f, 1f));
-
-        if (AudioManager.Instance != null) AudioManager.Instance.Play("Lightning");
     }
 }
