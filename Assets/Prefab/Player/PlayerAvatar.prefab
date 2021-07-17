@@ -151,7 +151,7 @@ MonoBehaviour:
   onLadder: 0
   ladderBelow: 0
   climbSpeed: 5
-  platformCheckOffset: {x: 0, y: 0, z: 0}
+  platformCheckOffset: {x: 0, y: -0.25, z: 0}
   platformCheckRadius: 0.5
   platformLayer:
     serializedVersion: 2
@@ -543,7 +543,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.003075689, y: -0.09391745}
+  m_Offset: {x: -0.003075689, y: -0.0377652}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -554,7 +554,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.54553336, y: 0.5624735}
+  m_Size: {x: 0.54553336, y: 0.9708534}
   m_EdgeRadius: 0
 --- !u!1 &583809002504579196
 GameObject:
@@ -1265,6 +1265,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349936488988804306, guid: 9d41f3254e2e6214f8fb9e150ac5d4d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d41f3254e2e6214f8fb9e150ac5d4d5, type: 3}
