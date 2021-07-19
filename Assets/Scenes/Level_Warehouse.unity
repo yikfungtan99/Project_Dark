@@ -4177,7 +4177,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 550, y: 50}
+  m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057272529
 MonoBehaviour:
@@ -4198,8 +4198,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "KEYBOARD 1\nWASD (Movement) - F (Attack) Shift (Torch)\n\nKEYBOARD 2\nArrow
-    Keys (Movement) - '?' (Attack) '>' (Torch)\n\nGAMEPAD [Recommended]\nLSTICK/DPAD
+  m_text: "KEYBOARD 1\nWASD (Movement) - V (Attack) LCtrl (Torch)\n\nKEYBOARD 2\nArrow
+    Keys (Movement) - 'RCtrl' (Attack) '>' (Torch)\n\nGAMEPAD [Recommended]\nLSTICK/DPAD
     (Movement)\nButton South (Jump) \nButton West (Torch)\nButton East (Attack)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a23a3261536b37746beba6f881ac7f5f, type: 2}
@@ -14362,6 +14362,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9328ce2fbf7531944b95e46383768030, type: 3}
     volume: 0.15
     pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - soundName: Lever
+    clip: {fileID: 8300000, guid: 94aedabf74f51334a86f26dbf08ef728, type: 3}
+    volume: 0.15
+    pitch: 1.95
     loop: 0
     source: {fileID: 0}
 --- !u!4 &1946424561

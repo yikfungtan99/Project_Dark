@@ -10,5 +10,6 @@ public abstract class Trigger : NetworkBehaviour
     public virtual void RpcFireTrigger()
     {
         OnTriggered();
+        if (AudioManager.Instance != null) AudioManager.Instance.Play("Lever");
     }
 }

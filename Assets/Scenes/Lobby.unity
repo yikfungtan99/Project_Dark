@@ -572,7 +572,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 550, y: 50}
+  m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &448583187
 MonoBehaviour:
@@ -593,8 +593,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "KEYBOARD 1\nWASD (Movement) - F (Attack) Shift (Torch)\n\nKEYBOARD 2\nArrow
-    Keys (Movement) - '?' (Attack) '>' (Torch)\n\nGAMEPAD [Recommended]\nLSTICK/DPAD
+  m_text: "KEYBOARD 1\nWASD (Movement) - V (Attack) LCtrl (Torch)\n\nKEYBOARD 2\nArrow
+    Keys (Movement) - 'RCtrl' (Attack) '>' (Torch)\n\nGAMEPAD [Recommended]\nLSTICK/DPAD
     (Movement)\nButton South (Jump) \nButton West (Torch)\nButton East (Attack)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a23a3261536b37746beba6f881ac7f5f, type: 2}
@@ -2667,10 +2667,10 @@ MonoBehaviour:
   levels:
   - levelScene: Assets/Scenes/Level_Warehouse.unity
     levelName: Warehouse
-    levelImage: {fileID: 21300000, guid: 0afb19525c1d79245aef40288eb7ca5b, type: 3}
+    levelImage: {fileID: 21300000, guid: 02447eb7ce94bb143ae36da7037e75ed, type: 3}
   - levelScene: Assets/Scenes/TestLevel_Trampoline.unity
     levelName: Trampolines
-    levelImage: {fileID: 21300000, guid: 4e19c377930235c42b76ba204d95d707, type: 3}
+    levelImage: {fileID: 21300000, guid: cd92a58d7df90d54da26c25a818e0a47, type: 3}
   levelSelect: 0
   levelNameText: {fileID: 788274948}
   levelImage: {fileID: 1660989441}
