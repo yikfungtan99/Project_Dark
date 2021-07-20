@@ -54,4 +54,9 @@ public class HUDManager : MonoBehaviour
         yield return new WaitForSeconds(GameManager.Instance.gameEndedDelayTime /2);
         txtWin.gameObject.SetActive(false);
     }
+
+    private void InitResultPanel()
+    {
+        
+    }
 }

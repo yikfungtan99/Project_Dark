@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : NetworkBehaviour
 {
@@ -25,7 +26,13 @@ public class GameManager : NetworkBehaviour
 
     public float gameEndedDelayTime;
 
+    public Dictionary<int, int> winners = new Dictionary<int, int>();
+
+    [SerializeField] private ResultPanel resultPanel;
+
     [SyncVar] public int round = 1;
+
+    [SerializeField] private int firstToWinCount = 0;
 
     public void Awake()
     {
@@ -97,12 +104,16 @@ public class GameManager : NetworkBehaviour
             Vector3 pos = spawnPoint[i].position;
             PlayerLobby pn = nm.playerList.transform.GetChild(i).GetComponent<PlayerLobby>();
             pn.CmdSpawnPlayer(i + 1, pn.gamepadNum, pos, rot);
+
+            if(!winners.ContainsKey(i + 1))
+            {
+                winners.Add(i + 1, 0);
+            }
         }
     }
 
     public void CheckForPlayerRemaining()
     {
-        print("checcking player remaining");
         int aliveNum = 0;
         foreach (var item in avatarList)
         {
@@ -125,6 +136,22 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    private PlayerStats GetWinnerPlayer()
+    {
+        PlayerStats winner = null;
+
+        foreach (var item in avatarList)
+        {
+            PlayerStats s = item.GetComponent<PlayerStats>();
+
+            if (s.alive)
+            {
+                winner = s;
+            }
+        }
+        return winner;
+    }
+
     private int GetWinner()
     {
         int winNum = -1;
@@ -132,7 +159,11 @@ public class GameManager : NetworkBehaviour
         foreach (var item in avatarList)
         {
             PlayerStats s = item.GetComponent<PlayerStats>();
-            if (s.alive) winNum = s.playerNum;
+            
+            if (s.alive) 
+            { 
+                winNum = s.playerNum;
+            }
         }
         return winNum;
     }
@@ -140,16 +171,42 @@ public class GameManager : NetworkBehaviour
     private void RestartGame()
     {
         if (isServer) round += 1;
+        GetWinnerPlayer().Win();
         StartCoroutine(GameEndDelay());
     }
 
     private IEnumerator GameEndDelay()
     {
+        bool haveWinner = false;
         hud.AnnounceWinner(GetWinner());
-        yield return new WaitForSeconds(gameEndedDelayTime);
-        DestroyAllPlayers();
-        SpawnPlayers();
 
+        if (winners.ContainsKey(GetWinner()))
+        {
+            winners[GetWinner()] += 1;
+        }
+
+        yield return new WaitForSeconds(gameEndedDelayTime);
+
+        for (int i = 0; i < winners.Count; i++)
+        {
+            if(winners[i + 1] >= firstToWinCount)
+            {
+                print("WE HAVE A WINNER");
+                haveWinner = true;
+                
+                break;
+            }
+        }
+
+        if (haveWinner)
+        {
+            ScorePanel();
+        }
+        else
+        {
+            DestroyAllPlayers();
+            SpawnPlayers();
+        }
         //hud.UpdatePlayerHUD();
     }
 
@@ -175,6 +232,28 @@ public class GameManager : NetworkBehaviour
     private void RpcResetAvatarList()
     {
         ResetAvatarList();
+    }
+
+    [ClientRpc]
+    private void RpcShowScorePanel()
+    {
+        resultPanel.gameObject.SetActive(true);
+    }
+
+    private void ScorePanel()
+    {
+        RpcShowScorePanel();
+        var sortedWinners = from entry in winners orderby entry.Value descending select entry;
+        foreach (KeyValuePair<int, int> win in sortedWinners)
+        {
+            RpcSpawnScorePanel(win.Key, win.Value);
+        }
+    }
+
+    [ClientRpc]
+    private void RpcSpawnScorePanel(int key, int value)
+    {
+        resultPanel.SpawnScorePanel(key, value);
     }
 
     public void Resume()

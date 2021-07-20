@@ -8,6 +8,7 @@ public class PlayerStats : NetworkBehaviour
 {
     public int maxHealth;
     [SyncVar(hook = "DamageEffects")] public int health;
+    public int win;
     [SyncVar(hook = "ChargeEffects")] public int battery;
 
     [SyncVar] public int playerNum = 0;
@@ -19,7 +20,10 @@ public class PlayerStats : NetworkBehaviour
     public bool alive = true;
     public bool grace = false;
     public bool reveal = false;
-     
+
+    public delegate void WinAction();
+    public event WinAction OnWin;
+
     private HUDManager hud;
 
     public void Start()
@@ -47,6 +51,14 @@ public class PlayerStats : NetworkBehaviour
         }
 
         reveal = false;
+    }
+
+    public void Win()
+    {
+        if(OnWin != null)
+        {
+            OnWin();
+        }
     }
 
     IEnumerator AddToAvatarList()
