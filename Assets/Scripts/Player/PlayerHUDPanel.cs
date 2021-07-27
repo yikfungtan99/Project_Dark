@@ -35,6 +35,8 @@ public class PlayerHUDPanel : MonoBehaviour
 
             txtName.text = "Player " + (playerStats.playerNum);
 
+            //print(playerStats.health);
+
             for (int i = 0; i < HPRack.childCount; i++)
             {
                 HPRack.GetChild(i).gameObject.SetActive(false);

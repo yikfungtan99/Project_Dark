@@ -22,6 +22,7 @@ public class Crate : Pickups
 
     public override void PickUp(Collider2D collision)
     {
+        if (!isServer) return;
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerHit")) return;
         if (collision.gameObject.transform.parent.CompareTag("Player"))
         {
