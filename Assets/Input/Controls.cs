@@ -49,6 +49,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Lever"",
+                    ""type"": ""Button"",
+                    ""id"": ""1c0ea97c-c252-4f66-b4d7-871db6e6bffb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -282,6 +290,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5b82b0e-660b-4715-875f-1cec7fe5a7f3"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lever"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9d25f2e-da20-47ec-9988-bcfb3cd5a1af"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lever"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -317,6 +347,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""c1f9ad06-1a6b-4412-8a84-fc36bb03305b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Lever"",
+                    ""type"": ""Button"",
+                    ""id"": ""f08e738b-db40-4f1b-88ab-119f5534416e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -410,6 +448,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08a3d52e-a687-4292-a555-67444f9627fa"",
+                    ""path"": ""<Keyboard>/period"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lever"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -445,12 +494,14 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player1_Jump = m_Player1.FindAction("Jump", throwIfNotFound: true);
         m_Player1_Torch = m_Player1.FindAction("Torch", throwIfNotFound: true);
         m_Player1_Attack = m_Player1.FindAction("Attack", throwIfNotFound: true);
+        m_Player1_Lever = m_Player1.FindAction("Lever", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Movement = m_Player2.FindAction("Movement", throwIfNotFound: true);
         m_Player2_Jump = m_Player2.FindAction("Jump", throwIfNotFound: true);
         m_Player2_Torch = m_Player2.FindAction("Torch", throwIfNotFound: true);
         m_Player2_Attack = m_Player2.FindAction("Attack", throwIfNotFound: true);
+        m_Player2_Lever = m_Player2.FindAction("Lever", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -504,6 +555,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player1_Jump;
     private readonly InputAction m_Player1_Torch;
     private readonly InputAction m_Player1_Attack;
+    private readonly InputAction m_Player1_Lever;
     public struct Player1Actions
     {
         private @Controls m_Wrapper;
@@ -512,6 +564,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player1_Jump;
         public InputAction @Torch => m_Wrapper.m_Player1_Torch;
         public InputAction @Attack => m_Wrapper.m_Player1_Attack;
+        public InputAction @Lever => m_Wrapper.m_Player1_Lever;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -533,6 +586,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Attack.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAttack;
+                @Lever.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnLever;
+                @Lever.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnLever;
+                @Lever.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnLever;
             }
             m_Wrapper.m_Player1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -549,6 +605,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Lever.started += instance.OnLever;
+                @Lever.performed += instance.OnLever;
+                @Lever.canceled += instance.OnLever;
             }
         }
     }
@@ -561,6 +620,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player2_Jump;
     private readonly InputAction m_Player2_Torch;
     private readonly InputAction m_Player2_Attack;
+    private readonly InputAction m_Player2_Lever;
     public struct Player2Actions
     {
         private @Controls m_Wrapper;
@@ -569,6 +629,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player2_Jump;
         public InputAction @Torch => m_Wrapper.m_Player2_Torch;
         public InputAction @Attack => m_Wrapper.m_Player2_Attack;
+        public InputAction @Lever => m_Wrapper.m_Player2_Lever;
         public InputActionMap Get() { return m_Wrapper.m_Player2; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -590,6 +651,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Attack.started -= m_Wrapper.m_Player2ActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_Player2ActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_Player2ActionsCallbackInterface.OnAttack;
+                @Lever.started -= m_Wrapper.m_Player2ActionsCallbackInterface.OnLever;
+                @Lever.performed -= m_Wrapper.m_Player2ActionsCallbackInterface.OnLever;
+                @Lever.canceled -= m_Wrapper.m_Player2ActionsCallbackInterface.OnLever;
             }
             m_Wrapper.m_Player2ActionsCallbackInterface = instance;
             if (instance != null)
@@ -606,6 +670,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Lever.started += instance.OnLever;
+                @Lever.performed += instance.OnLever;
+                @Lever.canceled += instance.OnLever;
             }
         }
     }
@@ -634,6 +701,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnTorch(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnLever(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {
@@ -641,5 +709,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnTorch(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnLever(InputAction.CallbackContext context);
     }
 }

@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Lever",
+                    "type": "Button",
+                    "id": "1c0ea97c-c252-4f66-b4d7-871db6e6bffb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -269,6 +277,28 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5b82b0e-660b-4715-875f-1cec7fe5a7f3",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lever",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9d25f2e-da20-47ec-9988-bcfb3cd5a1af",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lever",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -304,6 +334,14 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "c1f9ad06-1a6b-4412-8a84-fc36bb03305b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Lever",
+                    "type": "Button",
+                    "id": "f08e738b-db40-4f1b-88ab-119f5534416e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -395,6 +433,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08a3d52e-a687-4292-a555-67444f9627fa",
+                    "path": "<Keyboard>/period",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lever",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
