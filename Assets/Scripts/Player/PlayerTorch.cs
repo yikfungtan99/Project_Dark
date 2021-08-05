@@ -29,7 +29,6 @@ public class PlayerTorch : NetworkBehaviour
     public float drainRate;
 
     public bool torchOn;
-    public bool useTorch;
     private float radius;
 
     [SerializeField] private PlatformerMovement move;
@@ -43,8 +42,6 @@ public class PlayerTorch : NetworkBehaviour
         battery = maxTorchBattery;
 
         torchLight = torchObject.GetComponent<Light2D>();
-
-        useTorch = true;
     }
 
     // Update is called once per frame
@@ -174,16 +171,13 @@ public class PlayerTorch : NetworkBehaviour
 
         if (battery <= 0) return;
 
-        if (useTorch)
+        if (!torchOn)
         {
-            if (!torchOn)
-            {
-                CmdTorchOn();
-            }
-            else
-            {
-                CmdTorchOff();
-            }
+            CmdTorchOn();
+        }
+        else
+        {
+            CmdTorchOff();
         }
     }
 

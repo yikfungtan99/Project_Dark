@@ -1,18 +1,21 @@
-﻿using Mirror;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
+
+public enum ButtonMode
+{
+    STEP,
+    STAY
+}
 
 public class Lever : Trigger
 {
+    [SerializeField] private ButtonMode mode;
     [SerializeField] private SpriteRenderer s_lever;
     [SerializeField] private Sprite s_leverOn;
     [SerializeField] private Sprite s_leverOff;
-    [SerializeField] private PlayerTorch torch;
 
     public bool triggered;
-    public bool activateLever;
 
     private void ChangeSprite()
     {
@@ -30,53 +33,19 @@ public class Lever : Trigger
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.parent.CompareTag("Player"))
-        {
-            torch = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTorch>();
-            torch.useTorch = false;
-            activateLever = true;
+        if (isServer) RpcFireTrigger();
 
-            if (torch.torchOn)
-            {
-                torch.CmdTorchOff();
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.transform.parent.CompareTag("Player"))
-        {
-            torch.useTorch = false;
-            activateLever = true;
-        }
+        ChangeSprite();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.transform.parent.CompareTag("Player"))
         {
-            torch.useTorch = true;
-            activateLever = false;
+            if (mode == ButtonMode.STAY)
+            {
+                if (isServer) RpcFireTrigger();
+            }
         }
-    }
-
-    public void LeverCall(CallbackContext ctx)
-    {
-        if (torch == null) return;
-
-        if (!torch.useTorch && activateLever)
-        {
-            CmdTrigger();
-            ChangeSprite();
-        }
-
-        if (!hasAuthority) return;
-    }
-
-    [Command(ignoreAuthority = true)]
-    public void CmdTrigger()
-    {
-        RpcFireTrigger();
     }
 }

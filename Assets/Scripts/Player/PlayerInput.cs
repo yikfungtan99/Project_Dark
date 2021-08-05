@@ -19,7 +19,6 @@ public class PlayerInput : NetworkBehaviour
     PlatformerMovement move;
     PlayerAttack attack;
     PlayerTorch torch;
-    [SerializeField] Lever[] lever;
 
     private void Awake()
     {
@@ -35,7 +34,6 @@ public class PlayerInput : NetworkBehaviour
         move = GetComponent<PlatformerMovement>();
         attack = GetComponent<PlayerAttack>();
         torch = GetComponent<PlayerTorch>();
-        lever = FindObjectsOfType<Lever>();
 
         switch (controller)
         {
@@ -44,12 +42,6 @@ public class PlayerInput : NetworkBehaviour
                 controls.Player1.Torch.performed += torch.Torch;
                 controls.Player1.Jump.performed += move.JumpCall;
                 controls.Player1.Attack.performed += attack.AttackCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player1.Lever.performed += l.LeverCall;
-                }
-
                 InputUser user1 = InputUser.PerformPairingWithDevice(Keyboard.current);
                 user1.AssociateActionsWithUser(controls);
                 break;
@@ -58,12 +50,6 @@ public class PlayerInput : NetworkBehaviour
                 controls.Player2.Torch.performed += torch.Torch;
                 controls.Player2.Jump.performed += move.JumpCall;
                 controls.Player2.Attack.performed += attack.AttackCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player2.Lever.performed += l.LeverCall;
-                }
-
                 InputUser user2 = InputUser.PerformPairingWithDevice(Keyboard.current);
                 user2.AssociateActionsWithUser(controls);
                 break;
@@ -72,12 +58,6 @@ public class PlayerInput : NetworkBehaviour
                 controls.Player1.Torch.performed += torch.Torch;
                 controls.Player1.Jump.performed += move.JumpCall;
                 controls.Player1.Attack.performed += attack.AttackCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player1.Lever.performed += l.LeverCall;
-                }
-
                 InputUser user3 = InputUser.PerformPairingWithDevice(Gamepad.all[gamepadNum]);
                 user3.AssociateActionsWithUser(controls);
                 break;
@@ -85,12 +65,6 @@ public class PlayerInput : NetworkBehaviour
                 controls.Player1.Enable();
                 controls.Player1.Torch.performed += torch.Torch;
                 controls.Player1.Jump.performed += move.JumpCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player1.Lever.performed += l.LeverCall;
-                }
-
                 break;
         }
     }
@@ -105,47 +79,23 @@ public class PlayerInput : NetworkBehaviour
                 controls.Player1.Torch.performed -= torch.Torch;
                 controls.Player1.Attack.performed -= attack.AttackCall;
                 controls.Player1.Jump.performed -= move.JumpCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player1.Lever.performed -= l.LeverCall;
-                }
-
                 break;
             case ControllerType.KEYBOARD2:
                 controls.Player2.Disable();
                 controls.Player2.Torch.performed -= torch.Torch;
                 controls.Player2.Attack.performed -= attack.AttackCall;
                 controls.Player2.Jump.performed -= move.JumpCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player2.Lever.performed -= l.LeverCall;
-                }
-
                 break;
             case ControllerType.GAMEPAD:
                 controls.Player1.Disable();
                 controls.Player1.Torch.performed -= torch.Torch;
                 controls.Player1.Attack.performed -= attack.AttackCall;
                 controls.Player1.Jump.performed -= move.JumpCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player1.Lever.performed -= l.LeverCall;
-                }
-
                 break;
             default:
                 controls.Player1.Disable();
                 controls.Player1.Torch.performed -= torch.Torch;
                 controls.Player1.Jump.performed -= move.JumpCall;
-
-                foreach (Lever l in lever)
-                {
-                    controls.Player1.Lever.performed -= l.LeverCall;
-                }
-
                 break;
         }
     }
