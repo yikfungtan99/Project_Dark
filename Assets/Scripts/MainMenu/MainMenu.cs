@@ -151,4 +151,9 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetString("playerName", playerNameInput.text);
         }
     }
+
+    public void UpdateIPAddress(TMP_InputField ip)
+    {
+        nm.lrm.serverIP = ip.text.Trim();
+    }
 }
