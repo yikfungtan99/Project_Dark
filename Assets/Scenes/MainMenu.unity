@@ -8623,7 +8623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LIGHTS OUT : DINO RUMBLE'
+  m_text: 'LIGHTS OUT: DINO RUMBLE'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a23a3261536b37746beba6f881ac7f5f, type: 2}
   m_sharedMaterial: {fileID: -7488172860177013111, guid: a23a3261536b37746beba6f881ac7f5f,
